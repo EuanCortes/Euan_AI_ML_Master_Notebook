@@ -1,0 +1,140 @@
+\documentclass[10pt,oneside,a4paper,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin2]{inputenc}
+\usepackage[margin=2.25cm,headheight=26pt,includeheadfoot]{geometry}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{color}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage[framed, numbered]{matlab-prettifier}
+\usepackage{changepage}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor} 
+\usepackage{lastpage}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{multirow}
+\usepackage{titling}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{lscape}
+\usepackage{booktabs,caption}
+\usepackage[flushleft]{threeparttable}
+\usepackage[english]{nomencl}
+%\usepackage{xcolor}
+\usepackage{lipsum}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage[
+backend=biber,
+style=numeric,
+sorting=ynt
+]{biblatex}
+\bibliography{references.bib}
+
+
+% --- set footer and header ---
+\pagestyle{fancy}
+\fancyhf{}
+
+\setlength{\parindent}{2em}
+\title{TILE} % to reference as \title, dont use \maketitle
+\makeatletter\let\Title\@title\makeatother
+
+
+\lstset{language=Matlab,
+style=Matlab-editor,
+basicstyle=\normalsize\mlttfamily,
+numbers=left,
+numberstyle={\scriptsize\color{black}},			% size of the numbers
+numbersep=0.5cm											
+}
+
+\newlist{steps}{enumerate}{1}
+\setlist[steps, 1]{leftmargin=1.5cm,label = Step \arabic*:}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+%\lhead{\Title}
+\rhead{\nouppercase{\rightmark}}
+\lhead{\Title}
+\rfoot{\includegraphics[height=1.25cm]{root/logo.pdf}} % right header logo
+\setlength\headheight{16pt}
+\setlength{\footskip}{50pt}
+\lhead{\Title} %rightH title
+\cfoot{\thepage}
+
+% --- End of page settings ---
+
+
+
+\begin{document}
+\pagenumbering{roman} 
+\input{sources/00_frontpage.tex}
+
+\newpage
+\doublespacing
+%\addcontentsline{toc}{section}{Table of Contents}
+\renewcommand{\baselinestretch}{1}\normalsize
+\tableofcontents
+\renewcommand{\baselinestretch}{1}\normalsize
+%\singlespacing
+\thispagestyle{fancy} % force page style
+
+
+%\newpage
+%\pagenumbering{Roman} 
+%\addcontentsline{toc}{section}{List of Figures}
+%\fancyfoot[C]{Page \thepage\ of \pageref{endOfDoc}}
+%\listoffigures
+\thispagestyle{fancy}
+
+\newpage
+%\pagenumbering{Roman}
+\addcontentsline{toc}{section}{List of Tables}
+%\listoftables
+\thispagestyle{fancy}
+
+
+\newpage
+\pagenumbering{arabic} 
+%\fancyfoot[C]{Page \thepage\ of \pageref{EndOfText}}
+
+%%%%%%%%%%%%%%%%%%%% DOCUMENT STARTS HERE %%%%%%%%%%%%%%%%%%%%%%
+
+% Some formatting tips:
+% - Upload figures as pdf (to avoid file compression and bad quality)
+% - Use width command with \includegraphics so all figures are the same size:
+% \includegraphics[width=.8\textwidth]{figures/1.1_crop.pdf}
+
+\input{sources/1_introduction}
+
+\input{sources/Conclusion}
+
+\input{sources/Appendix}
+
+
+\printbibliography
+
+
+
+
+%%%%%%%%%%%%%%%%%%% END OF TEXT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{EndOfText}
+
+
+\label{endOfDoc}
+\end{document}
