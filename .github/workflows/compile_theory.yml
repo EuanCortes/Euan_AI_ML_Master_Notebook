@@ -1,14 +1,15 @@
 name: Compile LaTeX Theory Book
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
-      - 'theory/**'  
+      - 'theory/**'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'theory/**'   
+      - 'theory/**'
 
 jobs:
   build_latex:
