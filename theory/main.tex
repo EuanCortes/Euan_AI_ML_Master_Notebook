@@ -1,140 +1,96 @@
-\documentclass[10pt,oneside,a4paper,english]{article}
-\usepackage[T1]{fontenc}
-\usepackage[latin2]{inputenc}
-\usepackage[margin=2.25cm,headheight=26pt,includeheadfoot]{geometry}
-\usepackage[english]{babel}
-\usepackage{listings}
-\usepackage{array}
-\usepackage{color}
-\usepackage{titlesec}
-\usepackage{titling}
-\usepackage[framed, numbered]{matlab-prettifier}
-\usepackage{changepage}
-\usepackage{amsmath}
-\usepackage{hyperref}
-\usepackage{enumitem}
-\usepackage{graphicx}
-\usepackage{fancyhdr}
-\usepackage{multirow}
-\usepackage{graphicx}
-\usepackage[table,xcdraw]{xcolor} 
-\usepackage{lastpage}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{tocloft}
-\usepackage{setspace}
-\usepackage{multirow}
-\usepackage{titling}
-\usepackage{float}
-\usepackage{comment}
-\usepackage{booktabs}
-\usepackage{indentfirst}
-\usepackage{lscape}
-\usepackage{booktabs,caption}
-\usepackage[flushleft]{threeparttable}
-\usepackage[english]{nomencl}
-%\usepackage{xcolor}
-\usepackage{lipsum}
-\usepackage{url}
-\usepackage{hyperref}
-\usepackage{cite}
-\usepackage[
-backend=biber,
-style=numeric,
-sorting=ynt
-]{biblatex}
-\bibliography{references.bib}
+%==============================================================================
+% The Applied AI Engineer's Compendium
+% Master document — compile this file.
+%
+%   Locally:  latexmk -pdf main.tex
+%   Overleaf: set the main document to main.tex, compiler pdfLaTeX, Biber for
+%             the bibliography (Menu -> Settings).
+%
+% Structure:
+%   preamble.tex      packages, styling, theorem boxes, math macros
+%   chapters/*.tex    one file per checklist chapter (see docs/GEMINI.md)
+%   figures/          all images; \graphicspath is set in the preamble
+%   references.bib    single shared bibliography
+%
+% Add a new chapter by dropping a file into chapters/ and adding one \input
+% line to the roadmap below. Never write chapter prose in this file.
+%==============================================================================
+\documentclass[11pt,a4paper,oneside]{book}
 
+\input{preamble}
 
-% --- set footer and header ---
-\pagestyle{fancy}
-\fancyhf{}
-
-\setlength{\parindent}{2em}
-\title{TILE} % to reference as \title, dont use \maketitle
-\makeatletter\let\Title\@title\makeatother
-
-
-\lstset{language=Matlab,
-style=Matlab-editor,
-basicstyle=\normalsize\mlttfamily,
-numbers=left,
-numberstyle={\scriptsize\color{black}},			% size of the numbers
-numbersep=0.5cm											
-}
-
-\newlist{steps}{enumerate}{1}
-\setlist[steps, 1]{leftmargin=1.5cm,label = Step \arabic*:}
-\renewcommand{\headrulewidth}{1pt}
-\renewcommand{\footrulewidth}{1pt}
-
-%\lhead{\Title}
-\rhead{\nouppercase{\rightmark}}
-\lhead{\Title}
-\rfoot{\includegraphics[height=1.25cm]{root/logo.pdf}} % right header logo
-\setlength\headheight{16pt}
-\setlength{\footskip}{50pt}
-\lhead{\Title} %rightH title
-\cfoot{\thepage}
-
-% --- End of page settings ---
-
-
+\addbibresource{references.bib}
 
 \begin{document}
-\pagenumbering{roman} 
-\input{sources/00_frontpage.tex}
 
-\newpage
-\doublespacing
-%\addcontentsline{toc}{section}{Table of Contents}
-\renewcommand{\baselinestretch}{1}\normalsize
+%------------------------------------------------------------------------------
+% Front matter
+%------------------------------------------------------------------------------
+\frontmatter
+\pagestyle{empty}
+
+% Plain page rather than the titlepage environment: that environment resets the
+% page counter, which collides with the roman front-matter numbering and emits
+% duplicate-destination warnings from hyperref.
+\begingroup
+    \thispagestyle{empty}
+    \centering
+    \vspace*{3cm}
+
+    {\scshape\Large A Living Portfolio in Theory and Practice\par}
+    \vspace{1.5cm}
+
+    {\color{cmpNavy}\rule{\textwidth}{1.2pt}}
+    \vspace{0.8cm}
+
+    {\Huge\bfseries\color{cmpNavy} The Applied AI\\[0.3em] Engineer's Compendium\par}
+    \vspace{0.8cm}
+
+    {\Large\itshape From Linear Algebra to Deployed Systems\par}
+    \vspace{0.6cm}
+
+    {\color{cmpNavy}\rule{\textwidth}{1.2pt}}
+    \vspace{2.5cm}
+
+    {\Large Euan Cortes\par}
+    \vspace{0.5cm}
+    {\large\today\par}
+
+    \vfill
+    {\small
+     Companion code: \texttt{projects/} in this repository.\\
+     Curriculum: \texttt{docs/AI\_ML\_Master\_Checklist.md}.\par}
+\endgroup
+\clearpage
+\pagestyle{fancy}
 \tableofcontents
-\renewcommand{\baselinestretch}{1}\normalsize
-%\singlespacing
-\thispagestyle{fancy} % force page style
 
+%------------------------------------------------------------------------------
+% Main matter — chapter roadmap
+%
+% Uncomment each \input as the corresponding chapter file is written. The
+% numbering mirrors Part 2 of docs/ProjectPlanOverview.md so that chapter N of
+% the book always maps to projects/0N_*/ in the code half of the repository.
+%------------------------------------------------------------------------------
+\mainmatter
 
-%\newpage
-%\pagenumbering{Roman} 
-%\addcontentsline{toc}{section}{List of Figures}
-%\fancyfoot[C]{Page \thepage\ of \pageref{endOfDoc}}
-%\listoffigures
-\thispagestyle{fancy}
+\input{chapters/01_math_foundations}
+% \input{chapters/02_classical_ml}
+% \input{chapters/03_bayesian_ml}
+% \input{chapters/04_time_series}
+% \input{chapters/05_evaluation}
+% \input{chapters/06_deep_learning}
+% \input{chapters/07_computer_vision}
+% \input{chapters/08_gen_ai_nlp}
+% \input{chapters/09_agentic_deployment}
+% \input{chapters/10_sciml}
+% \input{chapters/11_mlops}
 
-\newpage
-%\pagenumbering{Roman}
-\addcontentsline{toc}{section}{List of Tables}
-%\listoftables
-\thispagestyle{fancy}
+%------------------------------------------------------------------------------
+% Back matter
+%------------------------------------------------------------------------------
+\backmatter
 
+\printbibliography[heading=bibintoc,title={References}]
 
-\newpage
-\pagenumbering{arabic} 
-%\fancyfoot[C]{Page \thepage\ of \pageref{EndOfText}}
-
-%%%%%%%%%%%%%%%%%%%% DOCUMENT STARTS HERE %%%%%%%%%%%%%%%%%%%%%%
-
-% Some formatting tips:
-% - Upload figures as pdf (to avoid file compression and bad quality)
-% - Use width command with \includegraphics so all figures are the same size:
-% \includegraphics[width=.8\textwidth]{figures/1.1_crop.pdf}
-
-\input{sources/1_introduction}
-
-\input{sources/Conclusion}
-
-\input{sources/Appendix}
-
-
-\printbibliography
-
-
-
-
-%%%%%%%%%%%%%%%%%%% END OF TEXT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\label{EndOfText}
-
-
-\label{endOfDoc}
 \end{document}

@@ -47,6 +47,7 @@ htmlcov/
 *.cb
 *.cb2
 .*.lb
+*.pdf
 
 # Bibliography auxiliary files
 *.bbl

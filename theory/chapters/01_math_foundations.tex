@@ -1,0 +1,247 @@
+%==============================================================================
+% Chapter 1 — Mathematical Foundations
+% Checklist section 1 of docs/AI_ML_Master_Checklist.md
+%==============================================================================
+\chapter{Mathematical Foundations}
+\label{ch:math-foundations}
+
+Before you can build the models, you need to speak the language they are written
+in. This chapter fixes the notation used throughout the Compendium and works
+through the four pillars that every later chapter leans on: linear algebra,
+multivariate calculus, probability, and information theory. Each result here
+reappears later in applied form: the singular value decomposition returns as
+PCA and as low-rank adaptation, the chain rule returns as backpropagation, and
+the Kullback--Leibler divergence returns as both the cross-entropy loss and the
+variational lower bound.
+
+\section{Linear Algebra}
+\label{sec:linear-algebra}
+
+A vector $\vect{x} \in \R^{n}$ is a point in $n$-dimensional space; a matrix
+$\mat{A} \in \R^{m \times n}$ is a linear map from $\R^{n}$ to $\R^{m}$. The
+dot product of $\vect{x}, \vect{y} \in \R^{n}$,
+%
+\begin{equation}
+    \inner*{\vect{x}, \vect{y}} = \vect{x}\T \vect{y}
+        = \sum_{i=1}^{n} x_i y_i
+        = \norm{\vect{x}}_2 \norm{\vect{y}}_2 \cos\theta ,
+    \label{eq:dot-product}
+\end{equation}
+%
+is the single most reused operation in machine learning. \Cref{eq:dot-product}
+is why cosine similarity is the default metric for vector databases: normalise
+both vectors and the dot product \emph{is} the cosine of the angle between them.
+
+\subsection{The Singular Value Decomposition}
+
+\begin{theorem}{Singular Value Decomposition}{svd}
+    Every matrix $\mat{A} \in \R^{m \times n}$ admits a factorisation
+    %
+    \begin{equation}
+        \mat{A} = \mat{U} \mat{\Sigma} \mat{V}\T ,
+        \label{eq:svd}
+    \end{equation}
+    %
+    where $\mat{U} \in \R^{m \times m}$ and $\mat{V} \in \R^{n \times n}$ are
+    orthogonal ($\mat{U}\T\mat{U} = \mat{I}$, $\mat{V}\T\mat{V} = \mat{I}$) and
+    $\mat{\Sigma} \in \R^{m \times n}$ is diagonal with non-negative entries
+    $\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0$, $r = \rank(\mat{A})$.
+\end{theorem}
+
+The columns of $\mat{V}$ are the eigenvectors of $\mat{A}\T\mat{A}$, the columns
+of $\mat{U}$ are the eigenvectors of $\mat{A}\mat{A}\T$, and the singular values
+satisfy $\sigma_i = \sqrt{\lambda_i}$ for the shared non-zero eigenvalues
+$\lambda_i$. Truncating \cref{eq:svd} to the largest $k$ singular values gives
+the best rank-$k$ approximation of $\mat{A}$ in both the Frobenius and spectral
+norms:
+%
+\begin{equation}
+    \mat{A}_k = \sum_{i=1}^{k} \sigma_i \vect{u}_i \vect{v}_i\T ,
+    \qquad
+    \norm{\mat{A} - \mat{A}_k}_F^2 = \sum_{i=k+1}^{r} \sigma_i^2 .
+    \label{eq:eckart-young}
+\end{equation}
+
+\begin{intuition}
+    \Cref{eq:eckart-young} is the mathematical core of dimensionality reduction,
+    image compression, and low-rank adaptation (LoRA). When a fine-tuning update
+    is written as $\mat{W} = \mat{W}_0 + \mat{B}\mat{A}$ with
+    $\mat{B} \in \R^{d \times k}$ and $\mat{A} \in \R^{k \times d}$, the claim
+    being made is that the useful part of the update has small $k$ --- that its
+    singular values decay fast.
+\end{intuition}
+
+\begin{example}[Rank-one structure]
+    Let $\mat{A} = \vect{u}\vect{v}\T$ for non-zero $\vect{u}, \vect{v}$. Then
+    $\rank(\mat{A}) = 1$, $\sigma_1 = \norm{\vect{u}}_2\norm{\vect{v}}_2$, and
+    every remaining singular value is zero, so $\mat{A}_1 = \mat{A}$ exactly.
+    No information is lost by storing $m + n$ numbers instead of $mn$.
+\end{example}
+
+\subsection{Verifying the Decomposition Numerically}
+
+Every derivation in this book should be checkable in a few lines of code. The
+convention throughout is that theory sections carry a runnable counterpart in
+\texttt{projects/}.
+
+\begin{lstlisting}[caption={Confirming the Eckart--Young bound from \cref{eq:eckart-young}.},label={lst:svd}]
+import numpy as np
+
+
+def truncated_svd(matrix: np.ndarray, rank: int) -> np.ndarray:
+    """Return the best rank-`rank` approximation of `matrix`."""
+    u, s, vt = np.linalg.svd(matrix, full_matrices=False)
+    return (u[:, :rank] * s[:rank]) @ vt[:rank, :]
+
+
+a = np.random.default_rng(0).standard_normal((8, 5))
+_, sigma, _ = np.linalg.svd(a, full_matrices=False)
+
+k = 2
+error = np.linalg.norm(a - truncated_svd(a, k), ord="fro") ** 2
+assert np.isclose(error, (sigma[k:] ** 2).sum())  # Eckart-Young
+\end{lstlisting}
+
+\section{Calculus}
+\label{sec:calculus}
+
+\begin{definition}{Gradient and Hessian}{grad-hess}
+    For $f : \R^{n} \to \R$, the gradient collects the first partial
+    derivatives and the Hessian collects the second:
+    %
+    \begin{equation*}
+        \grad f(\vect{x}) =
+        \begin{bmatrix} \pd{f}{x_1} \\[0.4em] \vdots \\[0.4em] \pd{f}{x_n} \end{bmatrix},
+        \qquad
+        \big[\Hess f(\vect{x})\big]_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}.
+    \end{equation*}
+\end{definition}
+
+The gradient points in the direction of steepest ascent, which is why gradient
+\emph{descent} moves against it. The second-order Taylor expansion of $f$ about
+$\vect{x}_0$,
+%
+\begin{equation}
+    f(\vect{x}) \approx f(\vect{x}_0)
+        + \grad f(\vect{x}_0)\T (\vect{x} - \vect{x}_0)
+        + \tfrac{1}{2} (\vect{x} - \vect{x}_0)\T \Hess f(\vect{x}_0) (\vect{x} - \vect{x}_0),
+    \label{eq:taylor}
+\end{equation}
+%
+justifies both Newton's method and the second-order loss approximation that
+XGBoost optimises at each boosting round.
+
+\subsection{The Chain Rule}
+
+Backpropagation is nothing more than the multivariate chain rule applied in
+reverse topological order. For a composition
+$\vect{z} = f_L \circ f_{L-1} \circ \dots \circ f_1(\vect{x})$, the Jacobian
+factorises as
+%
+\begin{equation}
+    \pd{\vect{z}}{\vect{x}}
+        = \pd{f_L}{f_{L-1}} \, \pd{f_{L-1}}{f_{L-2}} \cdots \pd{f_1}{\vect{x}} .
+    \label{eq:chain-rule}
+\end{equation}
+
+\begin{remark}
+    Evaluating \cref{eq:chain-rule} right-to-left is forward-mode
+    differentiation; left-to-right is reverse-mode. Reverse mode wins in deep
+    learning because the loss is scalar, so the leftmost factor is a single row
+    and every intermediate product stays a vector rather than a full matrix.
+\end{remark}
+
+\section{Probability and Statistics}
+\label{sec:probability}
+
+Bayes' theorem inverts a conditional distribution:
+%
+\begin{equation}
+    \Prob(\theta \given D)
+        = \frac{\Prob(D \given \theta)\,\Prob(\theta)}
+               {\int \Prob(D \given \theta)\,\Prob(\theta)\,\mathrm{d}\theta} .
+    \label{eq:bayes}
+\end{equation}
+
+The numerator is cheap; the normalising integral in the denominator is the
+reason MCMC and variational inference exist. Two estimators drop out of
+\cref{eq:bayes} by discarding parts of it:
+%
+\begin{align}
+    \hat{\theta}_{\mathrm{MLE}} &= \argmax_{\theta}\; \Prob(D \given \theta),
+        \label{eq:mle} \\
+    \hat{\theta}_{\mathrm{MAP}} &= \argmax_{\theta}\; \Prob(D \given \theta)\,\Prob(\theta).
+        \label{eq:map}
+\end{align}
+
+Maximum likelihood ignores the prior entirely; MAP keeps it but reports only the
+mode, throwing away the spread that makes the posterior useful. \Cref{tab:moments}
+summarises the first two moments used throughout the book.
+
+\begin{table}[H]
+    \centering
+    \caption{Moment definitions and their sample estimators.}
+    \label{tab:moments}
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        Quantity & Population & Sample estimator \\
+        \midrule
+        Mean       & $\mu = \E[X]$                    & $\bar{x} = \frac{1}{n}\sum_i x_i$ \\
+        Variance   & $\Var(X) = \E[(X-\mu)^2]$        & $\frac{1}{n-1}\sum_i (x_i - \bar{x})^2$ \\
+        Covariance & $\Cov(X,Y) = \E[(X-\mu_X)(Y-\mu_Y)]$ & $\frac{1}{n-1}\sum_i (x_i - \bar{x})(y_i - \bar{y})$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Information Theory}
+\label{sec:information-theory}
+
+\begin{definition}{Entropy, Cross-Entropy and KL Divergence}{information}
+    For discrete distributions $P$ and $Q$ over the same support $\mathcal{X}$,
+    %
+    \begin{align*}
+        \Ent{P}    &= -\sum_{x \in \mathcal{X}} P(x)\log P(x), \\
+        H(P, Q)    &= -\sum_{x \in \mathcal{X}} P(x)\log Q(x), \\
+        \KL{P}{Q}  &= \sum_{x \in \mathcal{X}} P(x)\log\frac{P(x)}{Q(x)}
+                    = H(P,Q) - \Ent{P} .
+    \end{align*}
+\end{definition}
+
+Because $\Ent{P}$ does not depend on the model, minimising the KL divergence
+between the empirical label distribution and the model's predictions is
+identical to minimising cross-entropy. That equivalence is the reason
+classifiers are trained with a cross-entropy loss at all, and it recurs when
+deriving the evidence lower bound in Bayesian inference \autocite{bishop2006prml}.
+
+\begin{intuition}
+    $\KL{P}{Q}$ is the expected number of extra bits paid for encoding samples
+    from $P$ with a code optimised for $Q$. It is non-negative, zero only when
+    $P = Q$, and asymmetric --- $\KL{P}{Q} \neq \KL{Q}{P}$ in general. That
+    asymmetry is a modelling choice, not a defect: forward KL spreads a fitted
+    distribution across all modes, while reverse KL lets it collapse onto one.
+\end{intuition}
+
+\section{Notation and Figures}
+\label{sec:notation}
+
+\Cref{fig:placeholder} confirms that the figure pipeline resolves correctly:
+images live in \texttt{figures/}, and \texttt{\textbackslash graphicspath} in
+\texttt{preamble.tex} means the path in \texttt{\textbackslash includegraphics}
+is a bare filename. Replace this placeholder with real diagrams as the chapter
+is written out.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{IMG_8232.jpg}
+    \caption[Figure pipeline placeholder]{Placeholder image, included to verify
+        that \texttt{\textbackslash graphicspath}, float placement, captions and
+        cross-references all work end to end. Swap for a real diagram --- for
+        this chapter, a geometric sketch of the SVD acting on the unit circle
+        would be the natural first figure.}
+    \label{fig:placeholder}
+\end{figure}
+
+The reference texts for this chapter are Strang \autocite{strang2019linalg} for
+linear algebra, Cover and Thomas \autocite{cover2006information} for information
+theory, and Goodfellow et al.\ \autocite{goodfellow2016deep} for the machine
+learning framing of all four sections.
