@@ -1,0 +1,100 @@
+# ==============================================================================
+# Python & Applied Engineering
+# ==============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments (uv / Poetry / Virtualenv)
+.env
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDEs & Editor configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==============================================================================
+# Jupyter Notebooks
+# ==============================================================================
+.ipynb_checkpoints
+
+# ==============================================================================
+# Mathematical Theory (LaTeX)
+# ==============================================================================
+# Core latex/pdflatex auxiliary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Bibliography auxiliary files
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# Build tool hidden files
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# ==============================================================================
+# Data & Data Version Control (DVC)
+# ==============================================================================
+# Ignore everything in the data folder except DVC tracking files
+/data/*
+!/data/*.dvc
+!/data/.gitignore
+
+# DVC system files
+.dvc/config.local
+.dvc/cache
+.dvc/tmp
+*.dvc
+
+# Machine Learning / Model Checkpoints
+*.pth
+*.pt
+*.h5
+*.hdf5
+*.onnx
+*.pkl
+*.joblib
+models/
+
+# ==============================================================================
+# Operating System Files
+# ==============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
