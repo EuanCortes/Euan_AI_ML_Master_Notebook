@@ -1,0 +1,216 @@
+%==============================================================================
+% preamble.tex
+% Shared packages, styling and math macros for the Compendium.
+% Chapters should never load packages themselves — add them here.
+%==============================================================================
+
+%------------------------------------------------------------------ encoding --
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+%------------------------------------------------------------------- layout ---
+\usepackage[a4paper,margin=2.5cm,headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+%--------------------------------------------------------------------- math ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+%------------------------------------------------------------------ graphics --
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\graphicspath{{figures/}}
+
+%------------------------------------------------------------------- content --
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+
+%--------------------------------------------------------------- references ---
+\usepackage{csquotes}   % required by biblatex when babel is loaded
+\usepackage[backend=biber,style=numeric,sorting=nyt,maxbibnames=99]{biblatex}
+\usepackage{hyperref}   % load late
+\usepackage[capitalise,noabbrev]{cleveref}  % load after hyperref
+
+%==============================================================================
+% Colour palette
+%==============================================================================
+\definecolor{cmpNavy}{HTML}{1F3A5F}
+\definecolor{cmpTeal}{HTML}{18827E}
+\definecolor{cmpAmber}{HTML}{B26B00}
+\definecolor{cmpGrey}{HTML}{4A4A4A}
+\definecolor{cmpMist}{HTML}{F4F6F8}
+
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = cmpNavy,
+    citecolor  = cmpTeal,
+    urlcolor   = cmpTeal,
+    pdftitle   = {The Applied AI Engineer's Compendium},
+    pdfauthor  = {Euan Cortes},
+    bookmarksnumbered = true,
+}
+
+%==============================================================================
+% Headers, footers and chapter titles
+%==============================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\small\textsc{\leftmark}}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyfoot[C]{\small\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+}
+
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries\color{cmpNavy}}
+    {\filleft\Large\mdseries\scshape Chapter \thechapter}
+    {2ex}
+    {\titlerule\vspace{2ex}\filright}
+    [\vspace{1ex}{\titlerule[0.6pt]}]
+
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{cmpNavy}}{\thesection}{1em}{}
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{cmpGrey}}{\thesubsection}{1em}{}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+%==============================================================================
+% Theorem-like environments
+%
+%   definition / theorem / lemma / proposition  — numbered within the chapter
+%   example / remark                            — unnumbered, informal
+%   intuition                                   — the "why does this matter" box
+%==============================================================================
+\tcbuselibrary{theorems,skins,breakable}
+
+\newtcbtheorem[number within=chapter]{definition}{Definition}{%
+    enhanced, breakable, colback=cmpMist, colframe=cmpNavy,
+    fonttitle=\bfseries, boxrule=0.6pt, arc=2pt,
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=cmpNavy},
+}{def}
+
+\newtcbtheorem[number within=chapter]{theorem}{Theorem}{%
+    enhanced, breakable, colback=white, colframe=cmpTeal,
+    fonttitle=\bfseries, boxrule=0.8pt, arc=2pt,
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=cmpTeal},
+}{thm}
+
+\newtcbtheorem[use counter from=theorem]{lemma}{Lemma}{%
+    enhanced, breakable, colback=white, colframe=cmpTeal,
+    fonttitle=\bfseries, boxrule=0.8pt, arc=2pt,
+    attach boxed title to top left={yshift=-2mm, xshift=4mm},
+    boxed title style={colback=cmpTeal},
+}{lem}
+
+\newtcolorbox{intuition}[1][Intuition]{%
+    enhanced, breakable, colback=cmpAmber!6, colframe=cmpAmber,
+    fonttitle=\bfseries, boxrule=0.6pt, arc=2pt, left=3mm, right=3mm,
+    title={#1},
+}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% cleveref names for the tcolorbox theorems
+\crefname{def}{Definition}{Definitions}
+\crefname{thm}{Theorem}{Theorems}
+\crefname{lem}{Lemma}{Lemmas}
+
+%==============================================================================
+% Code listings (Python — the applied half of the Compendium)
+%==============================================================================
+\definecolor{lstKeyword}{HTML}{1F3A5F}
+\definecolor{lstString}{HTML}{18827E}
+\definecolor{lstComment}{HTML}{8A8A8A}
+
+\lstdefinestyle{python}{
+    language         = Python,
+    basicstyle       = \ttfamily\small,
+    keywordstyle     = \color{lstKeyword}\bfseries,
+    stringstyle      = \color{lstString},
+    commentstyle     = \color{lstComment}\itshape,
+    numbers          = left,
+    numberstyle      = \tiny\color{cmpGrey},
+    numbersep        = 8pt,
+    frame            = single,
+    rulecolor        = \color{cmpGrey!40},
+    backgroundcolor  = \color{cmpMist},
+    breaklines       = true,
+    showstringspaces = false,
+    tabsize          = 4,
+    captionpos       = b,
+}
+\lstset{style=python}
+\renewcommand{\lstlistingname}{Listing}
+
+%==============================================================================
+% Math macros
+% Keep every notational choice here so notation stays consistent book-wide.
+%==============================================================================
+% Sets and spaces
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Prob}{\mathbb{P}}
+
+% Vectors, matrices, tensors
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{\mathrm{#1}}}
+\newcommand{\T}{^{\top}}
+
+% Operators
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\E}{\mathbb{E}}
+
+% Delimiters
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+\newcommand{\given}{\mathbin{\vert}}
+
+% Calculus
+\newcommand{\grad}{\nabla}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dd}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\Hess}{\mat{H}}
+
+% Distributions and divergences
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\KL}[2]{D_{\mathrm{KL}}\!\left(#1 \,\|\, #2\right)}
+\newcommand{\Ent}[1]{H\!\left(#1\right)}
+\newcommand{\dist}{\sim}
+
+% Cross-referencing helper: link a theory section to its project folder
+\newcommand{\projectref}[1]{%
+    \marginpar{\footnotesize\raggedright\textcolor{cmpTeal}{$\blacktriangleright$}\;\texttt{#1}}%
+}
