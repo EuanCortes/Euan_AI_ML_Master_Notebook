@@ -67,10 +67,9 @@ htmlcov/
 # ==============================================================================
 # Data & Data Version Control (DVC)
 # ==============================================================================
-# Ignore everything in the data folder except DVC tracking files
-/data/*
-!/data/*.dvc
-!/data/.gitignore
+projects/**/data/*
+!projects/**/data/*.dvc
+!projects/**/data/.gitignore
 
 # DVC system files
 .dvc/config.local
