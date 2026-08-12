@@ -1,0 +1,32 @@
+name: Compile LaTeX Theory Book
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'theory_book/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'theory_book/**'
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: theory_book
+          compiler: latexmk
+          args: -pdf -interaction=nonstopmode -synctex=1 -file-line-error
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: applied-ai-compendium
+          path: theory_book/main.pdf
