@@ -1,0 +1,112 @@
+%==============================================================================
+% Chapter 2 — Engineering Foundations & Infrastructure
+% Curriculum: Phase 1, Chapter 2 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/02_engineering_foundations/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Engineering Foundations \& Infrastructure}
+\label{ch:engineering-foundations}
+
+Chapter~\ref{ch:math-foundations} covered the language the models are written
+in.\projectref{projects/02\_engineering\_foundations/} This chapter covers the machinery that lets them be built twice and get the
+same answer. It sits in Phase~1 deliberately: dependency management, data
+versioning, branch protection and continuous integration are cheap to establish
+now and expensive to retrofit once eight chapters of code already exist. Every
+chapter from~\ref{ch:classical-ml} onward assumes the standards fixed here.
+
+The chapter divides into a theory half --- the design principles and the
+reasoning behind them --- and an applied half, which is the actual toolchain
+configured in this repository.
+
+%==============================================================================
+\section{Systems Design Principles}
+\label{sec:systems-design}
+
+\subsection{Separation of Concerns}
+
+\subsection{Dependency Direction}
+
+\subsection{Idempotency}
+
+\subsection{The Reproducibility Contract}
+
+%==============================================================================
+\section{Monorepo Architecture}
+\label{sec:monorepo}
+
+\subsection{Why Theory, Library Code and Projects Share a Repository}
+
+\subsection{Shared-Library versus Per-Project Dependency Boundaries}
+
+\subsection{The Cost Model: One Repository versus Many}
+
+%==============================================================================
+\section{Isolated Environments}
+\label{sec:isolated-environments}
+
+\subsection{Virtual Environments and the Interpreter Boundary}
+
+\subsection{Lockfiles versus Loose Version Ranges}
+
+\subsection{Why a Global \texttt{requirements.txt} Fails}
+
+%==============================================================================
+\section{Dependency Management with \texttt{uv}}
+\label{sec:uv}
+
+\subsection{Project Initialisation}
+
+\subsection{The Core Workflow: \texttt{sync}, \texttt{add}, \texttt{run}}
+
+\subsection{Resolving and Committing \texttt{uv.lock}}
+
+\subsection{Pinning the Interpreter with \texttt{.python-version}}
+
+\subsection{Per-Project \texttt{pyproject.toml} for Isolation}
+
+%==============================================================================
+\section{Data Version Control}
+\label{sec:dvc}
+
+\subsection{Initialising DVC}
+
+\subsection{Tracking Datasets as Lightweight Pointers}
+
+\subsection{Configuring a Remote}
+
+\subsection{The \texttt{push}/\texttt{pull} Round Trip}
+
+%==============================================================================
+\section{Git Workflow and Branch Protection}
+\label{sec:branch-protection}
+
+\subsection{Trunk-Based Development and Feature Branches}
+
+\subsection{Required Reviews and Status Checks}
+
+\subsection{Linear History}
+
+%==============================================================================
+\section{Continuous Integration and Delivery}
+\label{sec:cicd}
+
+\subsection{Workflow Anatomy: Triggers, Jobs, Steps}
+
+\subsection{Path Filters}
+
+\subsection{Automated Compilation of This Book}
+
+\subsection{Testing and Linting Gates}
+
+\subsection{Artifact Upload}
+
+%==============================================================================
+\section{Core Software Engineering Practice}
+\label{sec:software-engineering}
+
+\subsection{Unit Testing with \texttt{pytest}}
+
+\subsection{Fixtures and Parametrisation}
+
+\subsection{Type Hints and Docstrings as a Baseline}

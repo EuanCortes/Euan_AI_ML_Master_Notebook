@@ -1,0 +1,77 @@
+%==============================================================================
+% Chapter 4 — Bayesian ML & Probabilistic Modeling
+% Curriculum: Phase 2, Chapter 4 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/04_bayesian_ml/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Bayesian ML \& Probabilistic Modeling}
+\label{ch:bayesian-ml}
+
+The models of \cref{ch:classical-ml} return a number.\projectref{projects/04\_bayesian\_ml/} The models here return a
+distribution, and the difference matters whenever a prediction feeds a decision
+with asymmetric costs. This chapter picks up \cref{eq:bayes} and confronts the
+problem it created: the normalising integral in the denominator is intractable
+for anything interesting, so the whole field is organised around ways to avoid
+computing it.
+
+Two escape routes get developed in full --- sample from the posterior without
+normalising it (MCMC), or replace it with the closest tractable distribution
+(variational inference). The evidence lower bound derived here returns in
+\cref{ch:gen-ai} as the training objective for variational autoencoders, and
+the Gaussian process machinery underpins the Bayesian hyperparameter
+optimisation used throughout Phase~2.
+
+%==============================================================================
+\section{Core Bayesian Inference}
+\label{sec:bayesian-inference}
+
+\subsection{The Bayes Integral}
+
+\subsection{Priors, Likelihoods and Posteriors}
+
+\subsection{Conjugate Priors}
+
+%==============================================================================
+\section{Markov Chain Monte Carlo}
+\label{sec:mcmc}
+
+\subsection{Detailed Balance}
+
+\subsection{Metropolis--Hastings}
+
+\subsection{Hamiltonian Monte Carlo}
+
+\subsection{Diagnostics: Convergence and Effective Sample Size}
+
+%==============================================================================
+\section{Variational Inference}
+\label{sec:variational-inference}
+
+\subsection{Posing Inference as Optimisation}
+
+\subsection{Deriving the Evidence Lower Bound}
+
+\subsection{Mean-Field Approximations}
+
+%==============================================================================
+\section{Gaussian Processes}
+\label{sec:gaussian-processes}
+
+\subsection{Distributions Over Functions}
+
+\subsection{Covariance Functions and Kernels}
+
+\subsection{The Predictive Mean and Variance}
+
+\subsection{Cost and Scaling}
+
+%==============================================================================
+\section{Bayesian Deep Learning}
+\label{sec:bayesian-deep-learning}
+
+\subsection{Bayesian Neural Networks}
+
+\subsection{Monte Carlo Dropout as Approximate Inference}
+
+\subsection{Calibration and Uncertainty Quality}

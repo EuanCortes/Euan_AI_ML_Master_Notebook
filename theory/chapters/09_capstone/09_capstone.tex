@@ -1,0 +1,146 @@
+%==============================================================================
+% Chapter 9 — End-to-End Systems Design & MLOps (Capstone)
+% Curriculum: Phase 3, Chapter 9 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/09_capstone/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{End-to-End Systems Design \& MLOps}
+\label{ch:capstone}
+
+The capstone, and the only chapter that introduces no new model.\projectref{projects/09\_capstone/} It takes one
+already trained in Phase~2 and does the work that turns it into something other
+people can call: an HTTP interface, a durable log of what it was asked and what
+it answered, and a container stack that starts with one command.
+
+This is where the Chapter~\ref{ch:engineering-foundations} investment pays off.
+The dependencies are already locked, the data already versioned, the pipeline
+already runs on every pull request --- so the work here is genuinely about
+service design rather than about repairing eight chapters of accumulated
+improvisation. The distinction that organises the chapter is the training/serving
+boundary: training is a batch job that may take hours and is allowed to fail,
+while serving is a long-lived process that must answer in milliseconds and must
+not.
+
+%==============================================================================
+\section{From Notebooks to Live Services}
+\label{sec:notebooks-to-services}
+
+\subsection{Why a Notebook Is Not a Deployment Artifact}
+
+\subsection{The Training/Serving Boundary}
+
+\subsection{Model Artifacts and Versioning}
+
+\subsection{Training--Serving Skew}
+
+%==============================================================================
+\section{Data Persistence for Services}
+\label{sec:persistence}
+
+% No relational database in this chapter: the Compendium stays Python end to
+% end, so durable state is an append-only log plus columnar files rather than
+% Postgres. The design questions below are the ones that matter regardless of
+% the storage engine.
+
+\subsection{Durable versus Ephemeral State}
+
+\subsection{Append-Only Event Logs}
+
+\subsection{Schema Evolution for Logged Records}
+
+\subsection{Why the Serving Path Must Not Block on a Write}
+
+%==============================================================================
+\section{Microservice Architecture}
+\label{sec:microservices}
+
+\subsection{Service Decomposition}
+
+\subsection{Statelessness}
+
+\subsection{Synchronous versus Asynchronous Boundaries}
+
+\subsection{Health Checks}
+
+\subsection{Twelve-Factor Configuration}
+
+%==============================================================================
+\section{RESTful APIs with FastAPI}
+\label{sec:fastapi}
+
+\subsection{REST Principles}
+
+\subsection{Path and Query Parameters}
+
+\subsection{Pydantic Request and Response Schemas}
+
+\subsection{Dependency Injection}
+
+\subsection{Wrapping a Model Behind \texttt{/predict}}
+
+\subsection{OpenAPI Documentation}
+
+%==============================================================================
+\section{Prediction Logging in Python}
+\label{sec:prediction-logging}
+
+\subsection{Append-Only JSONL for Request/Response Records}
+
+\subsection{Parquet via \texttt{pandas} and \texttt{pyarrow}}
+
+\subsection{Partitioning by Date and Log Rotation}
+
+\subsection{Reading the Log Back to Compute Drift}
+
+% Closes the loop with \cref{sec:monitoring}: the logged records are the only
+% evidence available that the live input distribution still resembles the
+% training distribution.
+
+%==============================================================================
+\section{Containerization}
+\label{sec:docker}
+
+\subsection{Images versus Containers}
+
+\subsection{Layer Caching}
+
+\subsection{Multi-Stage Builds for Slim Python Images}
+
+%==============================================================================
+\section{Orchestration with Docker Compose}
+\label{sec:docker-compose}
+
+\subsection{Composing the API and Its Supporting Services}
+
+\subsection{Volumes and Networks}
+
+\subsection{Environment Configuration and Secrets}
+
+%==============================================================================
+\section{Model Serving at Scale}
+\label{sec:serving}
+
+\subsection{Inference Engines: \texttt{vLLM} and \texttt{llama.cpp}}
+
+\subsection{Batching}
+
+\subsection{The Latency--Throughput Tradeoff}
+
+%==============================================================================
+\section{Cloud Deployment}
+\label{sec:cloud}
+
+\subsection{Compute and Storage: EC2 and S3}
+
+\subsection{Managed Training and Endpoints: SageMaker}
+
+%==============================================================================
+\section{Monitoring}
+\label{sec:monitoring}
+
+\subsection{Structured Logging}
+
+\subsection{Drift Detection}
+
+\subsection{The Retraining Trigger}

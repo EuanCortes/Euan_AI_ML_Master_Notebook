@@ -1,0 +1,253 @@
+%==============================================================================
+% Chapter 3 — Classical ML & Model Evaluation
+% Curriculum: Phase 2, Chapter 3 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/03_classical_ml/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Data, Classical ML \& Model Evaluation}
+\label{ch:classical-ml}
+
+The first applied chapter, and the one that sets the pattern for the rest of
+Phase~2: derive the model, then build it.\projectref{projects/03\_classical\_ml/} The models here are the ones that
+still win on tabular data, and their mathematics is transparent enough to work
+through by hand --- ordinary least squares has a closed form, and the gradient
+boosting objective is a second-order Taylor expansion of exactly the kind seen
+in \cref{eq:taylor}.
+
+The chapter opens on data rather than on models, because that is where the time
+actually goes and because a leak introduced during preprocessing invalidates
+every number that follows. Everything here is \texttt{pandas} and
+\texttt{polars}: the Compendium stays in one language end to end, so there is no
+SQL in this chapter and no relational database in \cref{ch:capstone}.
+
+It then pairs the models with the evaluation machinery they need. That pairing
+is intentional: a model without a validation strategy is not a result, the
+bias--variance decomposition explains \emph{why} regularisation works rather
+than merely asserting that it does, and \cref{sec:statistical-inference} is what
+turns "B scored higher" into a defensible claim. Everything in the last third of
+the chapter applies unchanged to the deep models of
+\cref{ch:deep-learning,ch:gen-ai}.
+
+%==============================================================================
+\section{Data Loading and Exploratory Analysis}
+\label{sec:eda}
+
+\subsection{Dataframes in \texttt{pandas} and \texttt{polars}}
+
+\subsection{Vectorised Operations Instead of Loops}
+
+\subsection{Joins, Merges and Grouped Aggregation}
+
+\subsection{Profiling an Unfamiliar Dataset}
+
+\subsection{Inspecting Distributions and Correlations}
+
+%==============================================================================
+\section{Data Cleaning}
+\label{sec:data-cleaning}
+
+\subsection{Missing-Data Mechanisms: MCAR, MAR and MNAR}
+
+\subsection{Imputation Strategies}
+
+\subsection{Outlier Detection}
+
+\subsection{Duplicates, Dtype Coercion and Memory Footprint}
+
+%==============================================================================
+\section{Feature Engineering}
+\label{sec:feature-engineering}
+
+\subsection{Scaling and Standardisation}
+
+\subsection{Categorical Encoding: One-Hot, Ordinal and Target}
+
+\subsection{Interaction and Polynomial Features}
+
+\subsection{Binning and Cyclical Encoding}
+
+%==============================================================================
+\section{Dimensionality Reduction}
+\label{sec:dimensionality-reduction}
+
+% PCA is derived from the covariance matrix in \cref{sec:unsupervised}; this
+% section is about using it, and about the reduction methods that are only ever
+% visualisation tools.
+
+\subsection{PCA in Practice}
+
+\subsection{t-SNE and UMAP for Visualisation}
+
+\subsection{When Reduction Is the Wrong Choice}
+
+%==============================================================================
+\section{Linear Models}
+\label{sec:linear-models}
+
+\subsection{Ordinary Least Squares and the Normal Equations}
+
+\subsection{Logistic Regression and the Sigmoid Map}
+
+\subsection{Ridge and Lasso Regularisation}
+
+%==============================================================================
+\section{Tree-Based Models}
+\label{sec:trees}
+
+\subsection{Decision Trees: Information Gain and Gini Impurity}
+
+\subsection{Random Forests and the Mathematics of Bagging}
+
+\subsection{Gradient Boosting Machines}
+
+\subsection{XGBoost and LightGBM: the Taylor Expansion of the Loss}
+
+%==============================================================================
+\section{Support Vector Machines}
+\label{sec:svm}
+
+\subsection{Max-Margin Classification}
+
+\subsection{The Primal and Dual Problems}
+
+\subsection{The Kernel Trick}
+
+%==============================================================================
+\section{Unsupervised Learning}
+\label{sec:unsupervised}
+
+\subsection{K-Means and Lloyd's Algorithm}
+
+\subsection{Hierarchical Clustering}
+
+\subsection{Principal Component Analysis}
+\label{sec:pca}
+
+% Derive PCA via the eigendecomposition of the covariance matrix, then connect
+% it back to \cref{thm:svd}: the principal components are the right singular
+% vectors of the centred data matrix, which is why PCA is usually computed by
+% SVD rather than by forming the covariance matrix at all (see
+% \cref{sec:numerical-stability}).
+
+%==============================================================================
+\section{Recommender Systems}
+\label{sec:recommenders}
+
+% The first direct application of \cref{eq:eckart-young} outside compression:
+% a ratings matrix is mostly missing, and factorising it into user and item
+% factors is a low-rank approximation of the observed entries.
+
+\subsection{Collaborative versus Content-Based Filtering}
+
+\subsection{Matrix Factorization}
+
+\subsection{Implicit Feedback}
+
+\subsection{The Cold-Start Problem}
+
+\subsection{Ranking Metrics: MAP@k and NDCG}
+
+%==============================================================================
+\section{The Bias--Variance Tradeoff}
+\label{sec:bias-variance}
+
+\subsection{Decomposing the Expected Error}
+
+\subsection{Reading Regularisation Through the Decomposition}
+
+%==============================================================================
+\section{Validation Strategies}
+\label{sec:validation}
+
+\subsection{K-Fold Cross-Validation}
+
+\subsection{Stratified Sampling}
+
+\subsection{Temporal Splits}
+
+%==============================================================================
+\section{Metrics}
+\label{sec:metrics}
+
+\subsection{The Confusion Matrix}
+
+\subsection{Precision, Recall and the F1-Score}
+
+\subsection{ROC and the Area Under the Curve}
+
+\subsection{Regression Metrics: RMSE, MAE and \texorpdfstring{$R^2$}{R-squared}}
+
+\subsection{Comparing Two Models Honestly}
+
+% A gap in validation scores is an estimate with a standard error. Apply
+% \cref{sec:statistical-inference}: confidence intervals on the difference,
+% paired tests across folds, and correction when many models are compared.
+
+%==============================================================================
+\section{Hyperparameter Optimization}
+\label{sec:hyperparameter-optimization}
+
+\subsection{Grid and Random Search}
+
+\subsection{Successive Halving and Early Stopping of Trials}
+
+\subsection{Bayesian Optimization}
+
+% The surrogate model is a Gaussian process, developed in
+% \cref{sec:gaussian-processes}. State the acquisition-function idea here and
+% defer the GP mathematics to \cref{ch:bayesian-ml}.
+
+\subsection{\texttt{Optuna} in Practice}
+
+\subsection{Nested Cross-Validation and Tuning Without Leaking}
+
+%==============================================================================
+\section{Model Interpretability}
+\label{sec:interpretability}
+
+% The expected accompaniment to any ensemble result in practice --- a gradient
+% boosting model presented without SHAP values reads as unfinished work, so this
+% section is core rather than optional.
+
+\subsection{Why Built-In Tree Importances Mislead}
+
+\subsection{Permutation Importance}
+
+\subsection{Partial Dependence and ICE Plots}
+
+\subsection{Shapley Values}
+
+% From cooperative game theory: the unique attribution satisfying efficiency,
+% symmetry, dummy and additivity. Derive the Shapley value as the average
+% marginal contribution over all feature orderings, then show why the exact
+% computation is exponential in the number of features.
+
+\subsection{SHAP for Ensembles}
+
+% TreeSHAP computes exact Shapley values for tree ensembles in polynomial time,
+% which is why SHAP became the default for the models of \cref{sec:trees}.
+
+\subsection{Local versus Global Explanations}
+
+\subsection{Reading Summary, Force and Dependence Plots}
+
+\subsection{LIME}
+
+%==============================================================================
+\section{Data Issues, Bias and Fairness}
+\label{sec:data-issues}
+
+\subsection{Imbalanced Datasets and SMOTE}
+
+\subsection{Data Leakage}
+
+\subsection{Fairness Definitions}
+
+%==============================================================================
+\section{Experiment Tracking}
+\label{sec:experiment-tracking}
+
+\subsection{What to Log and Why}
+
+\subsection{Weights \& Biases and MLflow}

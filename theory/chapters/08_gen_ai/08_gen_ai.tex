@@ -1,0 +1,229 @@
+%==============================================================================
+% Chapter 8 — Generative AI, NLP & Agentic Systems
+% Curriculum: Phase 2, Chapter 8 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/08_gen_ai/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Generative AI, NLP \& Agentic Systems}
+\label{ch:gen-ai}
+
+The longest chapter in the book, and the one that collects debts from everywhere
+else.\projectref{projects/08\_gen\_ai/} Variational autoencoders are trained with the evidence lower bound of
+\cref{sec:variational-inference}. Low-rank adaptation is the truncated SVD of
+\cref{eq:eckart-young} applied to a weight update. Retrieval ranks documents by
+the cosine similarity that fell out of \cref{eq:dot-product}, and perplexity is
+the entropy of \cref{def:information} exponentiated.
+
+The chapter runs from the foundational generative families through the
+transformer and the techniques for adapting it, then out into the systems built
+\emph{around} a frozen model --- retrieval, tool use, orchestration --- and
+closes on how to tell whether any of it works, which is harder here than
+anywhere else in the book.
+
+%==============================================================================
+\section{Variational Autoencoders}
+\label{sec:vae}
+
+\subsection{The Latent Variable Model}
+
+\subsection{The Reparameterization Trick}
+
+\subsection{The ELBO as a Training Objective}
+
+%==============================================================================
+\section{Generative Adversarial Networks}
+\label{sec:gan}
+
+\subsection{The Minimax Game}
+
+\subsection{Training Instability and Mode Collapse}
+
+%==============================================================================
+\section{Diffusion Models}
+\label{sec:diffusion}
+
+\subsection{The Forward Noising Markov Chain}
+
+\subsection{The Reverse Denoising Process}
+
+\subsection{The Denoising U-Net}
+
+\subsection{Classifier-Free Guidance}
+
+%==============================================================================
+\section{Text Representation}
+\label{sec:text-representation}
+
+\subsection{Tokenization and Subword Vocabularies}
+
+\subsection{Embeddings}
+
+%==============================================================================
+\section{The Transformer Architecture}
+\label{sec:transformer}
+
+\subsection{Scaled Dot-Product Attention}
+
+\subsection{Multi-Head Attention}
+
+\subsection{Positional Encoding}
+
+\subsection{The Full Block: Residuals, Normalisation and the Feed-Forward Layer}
+
+\subsection{Encoder, Decoder and Decoder-Only Variants}
+
+%==============================================================================
+\section{Parameter-Efficient Fine-Tuning}
+\label{sec:peft}
+
+\subsection{Full Fine-Tuning and Why It Is Avoided}
+
+\subsection{LoRA and Low-Rank Decomposition}
+
+\subsection{QLoRA and Adapter Variants}
+
+%==============================================================================
+\section{Reinforcement Learning Fundamentals}
+\label{sec:rl}
+
+% Prerequisite for \cref{sec:alignment}, and the one paradigm in the book that
+% does not fit the supervised template of \cref{ch:deep-learning}: the model
+% generates its own data and the objective is a return rather than a label.
+% PPO is a variance fix to a policy gradient; without the chain below it is an
+% algorithm you can invoke but not reason about.
+
+\subsection{Markov Decision Processes}
+
+\subsection{Returns, Discounting and the Objective}
+
+\subsection{Value and Action-Value Functions}
+
+\subsection{The Bellman Equations}
+
+\subsection{Dynamic Programming: Policy and Value Iteration}
+
+\subsection{Temporal-Difference Learning and Q-Learning}
+
+\subsection{Deep Q-Networks}
+
+\subsection{The Policy Gradient Theorem and REINFORCE}
+
+\subsection{Baselines and Variance Reduction}
+
+\subsection{Actor-Critic and Advantage Estimation}
+
+\subsection{Trust Regions: from TRPO to the Clipped Surrogate}
+
+%==============================================================================
+\section{Alignment}
+\label{sec:alignment}
+
+\subsection{Supervised Fine-Tuning}
+
+\subsection{Reward Modeling from Preference Pairs}
+
+\subsection{RLHF with PPO}
+
+% Builds directly on \cref{sec:rl}: the policy is the language model, the action
+% space is the vocabulary, and the reward comes from the model fitted above ---
+% plus a KL penalty against the reference policy, which is
+% \cref{def:information} doing work again.
+
+\subsection{Direct Preference Optimization}
+
+% The derivation that removes the RL loop entirely by solving for the optimal
+% policy in closed form and substituting it into the reward model's likelihood.
+
+%==============================================================================
+\section{Local Inference and Quantization}
+\label{sec:quantization}
+
+\subsection{Numeric Formats from FP32 to INT4}
+
+\subsection{Post-Training Quantization and Quantization-Aware Training}
+
+\subsection{KV Cache Mechanics}
+
+%==============================================================================
+\section{The Hugging Face Ecosystem}
+\label{sec:huggingface}
+
+\subsection{\texttt{transformers} and \texttt{datasets}}
+
+\subsection{Hub Management and Model Cards}
+
+%==============================================================================
+\section{Prompt Engineering}
+\label{sec:prompting}
+
+\subsection{Zero-Shot and Few-Shot Prompting}
+
+\subsection{Chain-of-Thought}
+
+\subsection{Tree-of-Thought}
+
+%==============================================================================
+\section{Retrieval-Augmented Generation}
+\label{sec:rag}
+
+\subsection{Chunking Strategies}
+
+\subsection{Embedding Models}
+
+\subsection{Vector Databases}
+
+\subsection{Distance Metrics}
+
+\subsection{The Ingestion-to-Answer Pipeline}
+
+\subsection{Reranking and Hybrid Search}
+
+%==============================================================================
+\section{Agentic Systems}
+\label{sec:agents}
+
+\subsection{The ReAct Framework}
+
+\subsection{Tool and Function Calling}
+
+\subsection{Multi-Agent Orchestration as a DAG}
+
+%==============================================================================
+\section{Generative Evaluation and Benchmarking}
+\label{sec:gen-eval}
+
+\subsection{N-Gram Metrics: BLEU and ROUGE}
+
+\subsection{Perplexity and Cross-Entropy}
+
+\subsection{RAG Metrics: Context Precision, Recall and Faithfulness}
+
+\subsection{LLM-as-Judge and Its Failure Modes}
+
+%==============================================================================
+\section{Adversarial Robustness and AI Security}
+\label{sec:ai-security}
+
+% \Cref{ch:capstone} puts a model behind a public HTTP endpoint, which turns
+% everything below from a research topic into an operational requirement.
+
+\subsection{Adversarial Examples: FGSM and PGD}
+
+% The gradient of the loss with respect to the \emph{input} rather than the
+% weights --- the same machinery as \cref{sec:pinn}, pointed at an attack.
+
+\subsection{Data Poisoning and Backdoor Attacks}
+
+\subsection{Prompt Injection and Jailbreaks}
+
+\subsection{Indirect Injection Through Retrieved Documents}
+
+% The failure mode specific to \cref{sec:rag}: retrieved context is untrusted
+% input, but the model reads it as instructions.
+
+\subsection{Model Extraction and Membership Inference}
+
+\subsection{PII Handling, Data Minimisation and Differential Privacy}
+
+\subsection{Input Validation and Output Guardrails}

@@ -21,11 +21,18 @@ The curriculum runs in three phases:
 *   **Phase 3 — Production & Deployment (Chapter 9).** The capstone: a trained
     model deployed as a live, multi-container service.
 
-The defining structural decision is that **engineering infrastructure is Chapter
-2, not an afterthought**. Dependency management, data versioning, branch
+Two decisions shape everything else. The first is that **engineering
+infrastructure is Chapter 2, not an afterthought**. Dependency management, data versioning, branch
 protection, and CI/CD are all in place before the first model is trained, so
 every chapter from 3 onward inherits a reproducible pipeline rather than
 retrofitting one.
+
+The second is that **the stack is Python end to end**. Data work is
+pandas/Polars rather than SQL, and the Chapter 9 capstone persists state in
+JSONL and Parquet rather than a relational database. This trades some
+production realism for a single language across all nine chapters, which keeps
+the learning curve on modelling and systems design rather than on a second
+query language.
 
 ## 2. Repository Architecture
 
@@ -37,16 +44,17 @@ Euan_AI_ML_Master_Notebook/
 ├── theory/                      # LaTeX source for the master notebook
 │   ├── main.tex                 # Master document — compile this
 │   ├── preamble.tex             # Packages, styling, theorem boxes, math macros
-│   ├── chapters/                # One file per chapter (01_math_foundations.tex …)
+│   ├── chapters/                # One FOLDER per chapter, nine in total
+│   │   └── 01_math_foundations/ #   0N_<slug>/0N_<slug>.tex
 │   ├── figures/                 # All images; \graphicspath set in preamble
 │   └── references.bib           # Single shared bibliography
 ├── src/
 │   └── mlnotebook/              # Shared library code, installed via uv
 ├── projects/                    # Executable code, one folder per chapter
-│   ├── 02_infrastructure/       # Chapter 2 — DVC, CI/CD, tooling setup
+│   ├── 02_engineering_foundations/ # Chapter 2 — DVC, CI/CD, tooling setup
 │   ├── 03_classical_ml/         # Chapter 3 — e.g. housing_price_xgboost/
 │   ├── 08_gen_ai/               # Chapter 8 — e.g. local_rag_pipeline/
-│   └── 09_capstone/             # Chapter 9 — FastAPI + Postgres + Docker stack
+│   └── 09_capstone/             # Chapter 9 — FastAPI + Docker stack
 ├── docs/                        # Planning and reference material
 │   ├── AI_ML_Master_Checklist.md    # Curriculum (source of truth)
 │   ├── ProjectPlanOverview.md       # This file
@@ -88,7 +96,7 @@ on they are simply enforced.
 Work proceeds chapter by chapter. For each chapter:
 
 1.  **Write the theory.** Derive the mathematics in
-    `theory/chapters/0N_*.tex`, working through it by hand first.
+    `theory/chapters/0N_*/0N_*.tex`, working through it by hand first.
 2.  **Build the implementation.** Write the corresponding code in
     `projects/0N_*/`, applying the Chapter 2 standards.
 3.  **Wire it to CI.** Tests run on pull request; the theory book recompiles on

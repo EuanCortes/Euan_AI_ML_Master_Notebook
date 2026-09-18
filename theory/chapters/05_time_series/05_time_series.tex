@@ -1,0 +1,80 @@
+%==============================================================================
+% Chapter 5 — Time Series Analysis & Financial Engineering
+% Curriculum: Phase 2, Chapter 5 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/05_time_series/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Time Series Analysis \& Financial Engineering}
+\label{ch:time-series}
+
+Every model so far has assumed that observations are independent draws from a
+fixed distribution.\projectref{projects/05\_time\_series/} Time series violate both halves of that assumption, and the
+consequences are practical rather than academic: the random train/test split of
+\cref{sec:validation} leaks future information into the past, and a model
+validated that way will look excellent and lose money.
+
+The chapter builds the classical statistical toolkit first, then the stochastic
+calculus that finance is written in, and closes on the deep architectures that
+now compete with both. Ito's lemma is the chain rule of
+\cref{eq:chain-rule} extended to processes with non-vanishing quadratic
+variation --- worth deriving carefully, because the Black--Scholes PDE follows
+from it in a few lines.
+
+%==============================================================================
+\section{Classical Time Series Statistics}
+\label{sec:classical-time-series}
+
+\subsection{Stationarity}
+
+\subsection{Autocorrelation and Partial Autocorrelation}
+
+\subsection{The Augmented Dickey--Fuller Test}
+
+\subsection{ARIMA and SARIMA}
+
+%==============================================================================
+\section{Volatility Modeling}
+\label{sec:volatility}
+
+\subsection{Heteroskedasticity in Financial Returns}
+
+\subsection{ARCH}
+
+\subsection{GARCH}
+
+%==============================================================================
+\section{Stochastic Calculus}
+\label{sec:stochastic-calculus}
+
+\subsection{Brownian Motion and Wiener Processes}
+
+\subsection{Ito's Lemma}
+
+\subsection{Geometric Brownian Motion}
+
+\subsection{Deriving the Black--Scholes PDE}
+
+%==============================================================================
+\section{Portfolio Optimization}
+\label{sec:portfolio-optimization}
+
+\subsection{Mean--Variance Optimisation}
+
+\subsection{The Markowitz Efficient Frontier}
+
+%==============================================================================
+\section{Deep Time Series}
+\label{sec:deep-time-series}
+
+\subsection{Temporal Convolutional Networks}
+
+\subsection{Time Series Transformers and PatchTST}
+
+%==============================================================================
+\section{Backtesting}
+\label{sec:backtesting}
+
+\subsection{Walk-Forward Validation}
+
+\subsection{Look-Ahead Bias and Survivorship Bias}

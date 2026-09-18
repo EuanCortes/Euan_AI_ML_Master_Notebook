@@ -1,0 +1,173 @@
+%==============================================================================
+% Chapter 6 — Deep Learning Fundamentals
+% Curriculum: Phase 2, Chapter 6 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/06_deep_learning/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Deep Learning Fundamentals}
+\label{ch:deep-learning}
+
+The pivot of the book.\projectref{projects/06\_deep\_learning/} Everything in \cref{ch:classical-ml} either had a closed
+form or a bespoke fitting procedure; from here on there is one procedure ---
+write down a differentiable loss and descend its gradient --- and the modelling
+work moves into choosing the architecture.
+
+The chapter closes on two things that Phase~2 cannot proceed without. Sequence
+models --- recurrence, gating, and the encoder/decoder bottleneck --- are what
+make the Transformer of \cref{sec:transformer} read as a solution rather than a
+declaration. High-performance computing is what makes any of
+\cref{ch:gen-ai} runnable at all: the constraint on a modern model is GPU
+memory, and that is arithmetic you can do in advance rather than discover
+through a crash.
+
+The mathematics is already in place. Backpropagation is \cref{eq:chain-rule}
+evaluated in reverse topological order, and the optimisers are variations on
+descending the gradient of \cref{eq:taylor}. The goal of the chapter is to
+write both out by hand for a multilayer perceptron, implement them from scratch
+against a finite-difference check, and only then reach for a framework.
+
+%==============================================================================
+\section{The Multilayer Perceptron}
+\label{sec:mlp}
+
+\subsection{Nodes, Weights and Biases}
+
+\subsection{The Forward Pass}
+
+\subsection{Backpropagation by Hand}
+
+\subsection{Universal Approximation and Its Limits}
+
+%==============================================================================
+\section{Activation Functions}
+\label{sec:activations}
+
+\subsection{Sigmoid and Tanh}
+
+\subsection{ReLU and Its Variants}
+
+\subsection{GELU}
+
+\subsection{Softmax}
+
+%==============================================================================
+\section{Loss Functions}
+\label{sec:losses}
+
+\subsection{Mean Squared Error}
+
+\subsection{Binary and Categorical Cross-Entropy}
+
+\subsection{Hinge Loss}
+
+%==============================================================================
+\section{Optimization Algorithms}
+\label{sec:optimizers}
+
+\subsection{Stochastic Gradient Descent}
+
+\subsection{Momentum}
+
+\subsection{RMSProp}
+
+\subsection{Adam and the Bias-Corrected Moment Estimates}
+
+\subsection{Learning Rate Schedules}
+
+%==============================================================================
+\section{Regularization}
+\label{sec:regularization}
+
+\subsection{Dropout}
+
+\subsection{Batch Normalization}
+
+\subsection{Early Stopping}
+
+\subsection{Weight Decay and Its Relation to Ridge}
+
+%==============================================================================
+\section{Training in Practice}
+\label{sec:training-practice}
+
+\subsection{Weight Initialisation}
+
+\subsection{Vanishing and Exploding Gradients}
+
+\subsection{Diagnosing a Training Run}
+
+%==============================================================================
+\section{Sequence Models}
+\label{sec:sequence-models}
+
+% The bridge to \cref{ch:gen-ai}. Attention is far harder to motivate if the
+% fixed-context bottleneck it removes was never felt, so this section exists to
+% make the Transformer feel inevitable rather than arbitrary.
+
+\subsection{Recurrent Neural Networks}
+
+\subsection{Backpropagation Through Time}
+
+\subsection{Vanishing Gradients Over Time}
+
+% The same phenomenon as \cref{sec:training-practice} but compounded by weight
+% sharing across timesteps: the gradient carries a factor of the recurrent
+% weight matrix raised to the sequence length.
+
+\subsection{LSTM Gating}
+
+\subsection{Gated Recurrent Units}
+
+\subsection{Sequence-to-Sequence Models}
+
+\subsection{The Fixed-Context Bottleneck}
+
+\subsection{Additive Attention}
+
+% Bahdanau attention: let the decoder form a weighted sum over all encoder
+% states instead of a single final vector. Removing the recurrence from this
+% idea is exactly \cref{sec:transformer}.
+
+%==============================================================================
+\section{Efficient Training and High-Performance Computing}
+\label{sec:hpc}
+
+% What separates "train an MLP on a laptop" from "fine-tune a language model",
+% and therefore a prerequisite for \cref{ch:gen-ai}. The binding constraint is
+% almost always memory, and it is predictable with arithmetic rather than by
+% trial and error.
+
+\subsection{The GPU Execution Model}
+
+% SIMT, warps, occupancy and the memory hierarchy --- enough to explain why
+% small batches leave the device idle and why data loading is so often the real
+% bottleneck.
+
+\subsection{Memory Arithmetic}
+
+% Parameters + gradients + optimizer states + activations. Adam holds two
+% moments per parameter, so an FP32 model costs roughly 16 bytes per parameter
+% before activations. Work out whether a model fits before launching the job.
+
+\subsection{Mixed Precision and Loss Scaling}
+
+% FP16 versus BF16, why FP16 needs loss scaling, and how this connects back to
+% \cref{sec:numerical-stability}.
+
+\subsection{Gradient Accumulation}
+
+\subsection{Activation Checkpointing}
+
+\subsection{Data Parallelism: DDP}
+
+\subsection{Sharded Training: ZeRO and FSDP}
+
+\subsection{Tensor, Pipeline and Model Parallelism}
+
+\subsection{Profiling and Finding the Real Bottleneck}
+
+\subsection{Cluster Scheduling and Checkpoint Discipline}
+
+% SLURM job submission, multi-GPU and multi-node launches, and writing
+% checkpoints such that a pre-empted job resumes rather than restarts.

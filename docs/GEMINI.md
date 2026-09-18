@@ -8,10 +8,11 @@
 
 1.  **Source of Truth:** The Project Plan and Master Checklist below dictate our architecture and curriculum. Do not deviate from these structural guidelines. The curriculum is nine chapters across three phases — do not renumber or reorder them.
 2.  **Enforce Future-Proofing:** Always hold me to the Chapter 2 standards: `uv` for dependency management with a committed `uv.lock`, Data Version Control (DVC) for datasets, protected `main` with pull-request merges, modular LaTeX files, and CI/CD via GitHub Actions. If I ask for a Python script, ensure it is production-ready, object-oriented where that earns its place, and includes type hints and docstrings.
-3.  **Mathematical Rigor:** When we work on a theory section, provide exact, step-by-step mathematical formulas and derivations formatted in LaTeX.
-4.  **Theory Before Code:** Each chapter has a theory half and an applied half. Guide me through the derivation before the implementation — I write the mathematics by hand first.
-5.  **Respect the Phase Ordering:** Chapters 1 and 2 are foundations and come first. Chapter 9 is the capstone and comes last; it deploys a model built in an earlier chapter rather than introducing a new one. Do not pull deployment work forward into Phase 2.
-6.  **Pacing:** Wait for me to specify which Phase and Chapter we are currently working on. Do not dump an entire project's code at once; guide me step-by-step so I can learn and write the theory alongside the code.
+3.  **Python End to End:** The stack is Python only. Data work is `pandas`/`polars`, never SQL, and the Chapter 9 capstone persists state in JSONL/Parquet rather than a relational database. Do not propose Postgres, SQLAlchemy, or a SQL-based solution.
+4.  **Mathematical Rigor:** When we work on a theory section, provide exact, step-by-step mathematical formulas and derivations formatted in LaTeX.
+5.  **Theory Before Code:** Each chapter has a theory half and an applied half. Guide me through the derivation before the implementation — I write the mathematics by hand first.
+6.  **Respect the Phase Ordering:** Chapters 1 and 2 are foundations and come first. Chapter 9 is the capstone and comes last; it deploys a model built in an earlier chapter rather than introducing a new one. Do not pull deployment work forward into Phase 2.
+7.  **Pacing:** Wait for me to specify which Phase and Chapter we are currently working on. Do not dump an entire project's code at once; guide me step-by-step so I can learn and write the theory alongside the code.
 
 **Acknowledge this document by saying: "Compendium Master Plan loaded. Which phase and chapter are we tackling today?"**
 
@@ -34,16 +35,17 @@ Euan_AI_ML_Master_Notebook/
 ├── theory/                      # LaTeX source for the master notebook
 │   ├── main.tex                 # Master document — compile this
 │   ├── preamble.tex             # Packages, styling, theorem boxes, math macros
-│   ├── chapters/                # One file per chapter (01_math_foundations.tex …)
+│   ├── chapters/                # One FOLDER per chapter, nine in total
+│   │   └── 01_math_foundations/ #   0N_<slug>/0N_<slug>.tex
 │   ├── figures/                 # All images; \graphicspath set in preamble
 │   └── references.bib           # Single shared bibliography
 ├── src/
 │   └── mlnotebook/              # Shared library code, installed via uv
 ├── projects/                    # Executable code, one folder per chapter
-│   ├── 02_infrastructure/       # Chapter 2 — DVC, CI/CD, tooling setup
+│   ├── 02_engineering_foundations/ # Chapter 2 — DVC, CI/CD, tooling setup
 │   ├── 03_classical_ml/         # Chapter 3 — e.g. housing_price_xgboost/
 │   ├── 08_gen_ai/               # Chapter 8 — e.g. local_rag_pipeline/
-│   └── 09_capstone/             # Chapter 9 — FastAPI + Postgres + Docker stack
+│   └── 09_capstone/             # Chapter 9 — FastAPI + Docker stack
 ├── docs/                        # Planning and reference material
 │   ├── AI_ML_Master_Checklist.md    # Curriculum (source of truth)
 │   ├── ProjectPlanOverview.md       # Architecture and execution strategy
@@ -69,7 +71,7 @@ Chapter *N* of the book always maps to `projects/0N_*/` in the code half of the 
 
 Work proceeds chapter by chapter. For each chapter:
 
-1.  **Write the theory.** Derive the mathematics in `theory/chapters/0N_*.tex`, working through it by hand first.
+1.  **Write the theory.** Derive the mathematics in `theory/chapters/0N_*/0N_*.tex`, working through it by hand first.
 2.  **Build the implementation.** Write the corresponding code in `projects/0N_*/`, applying the Chapter 2 standards.
 3.  **Wire it to CI.** Tests run on pull request; the theory book recompiles on merge.
 4.  **Merge via pull request.** No direct commits to `main`.
@@ -78,6 +80,7 @@ Work proceeds chapter by chapter. For each chapter:
 
 ## Part 2: The Master Checklist
 
+
 The curriculum runs in three phases: build the mathematical and engineering
 foundations, work through applied ML and AI, then ship the whole thing as a
 production system.
@@ -85,8 +88,8 @@ production system.
 | Phase | Chapter | Title | Code |
 | :--- | :--- | :--- | :--- |
 | 1 | 1 | Mathematical Foundations for Machine Learning | — |
-| 1 | 2 | Engineering Foundations & Infrastructure | `projects/02_infrastructure/` |
-| 2 | 3 | Classical ML & Model Evaluation | `projects/03_classical_ml/` |
+| 1 | 2 | Engineering Foundations & Infrastructure | `projects/02_engineering_foundations/` |
+| 2 | 3 | Data, Classical ML & Model Evaluation | `projects/03_classical_ml/` |
 | 2 | 4 | Bayesian ML & Probabilistic Modeling | `projects/04_bayesian_ml/` |
 | 2 | 5 | Time Series Analysis & Financial Engineering | `projects/05_time_series/` |
 | 2 | 6 | Deep Learning Fundamentals | `projects/06_deep_learning/` |
@@ -97,6 +100,10 @@ production system.
 Each chapter carries two halves. **Theory** is the mathematics and the design
 principles, written in LaTeX under `theory/chapters/`. **Applied** is the
 executable implementation under `projects/`.
+
+**The stack is Python end to end.** Data work is pandas/Polars, not SQL;
+persistence is Python-native file formats, not a relational database. That is a
+deliberate scope decision — it keeps every chapter in one language.
 
 ---
 
@@ -111,9 +118,9 @@ inherits it rather than retrofitting it.
 *Before you can build the models, you need to speak the language they are written in.*
 
 The three pillars of this chapter are **Linear Algebra**, **Matrix Calculus**, and
-**Multivariate Optimization**. Probability and Information Theory follow as
-supporting sections — they are prerequisites for Chapters 4 and 8 rather than
-optional extras.
+**Multivariate Optimization**. Probability, statistical inference, information
+theory, and numerical computing follow as supporting sections — they are
+prerequisites for Chapters 3, 4, and 8 rather than optional extras.
 
 *   **Linear Algebra:** Vectors, matrices, tensors, dot products, eigenvalue/eigenvector decomposition, Singular Value Decomposition (SVD) ($A = U \Sigma V^T$).
 *   **Matrix Calculus:** Partial derivatives, the chain rule (the heart of backpropagation), gradients, Jacobians, Hessians, Taylor series expansion, and the layout conventions for differentiating vector- and matrix-valued functions.
@@ -121,10 +128,22 @@ optional extras.
     *   Convexity, stationary points, and second-order conditions.
     *   Constrained optimization: Lagrange multipliers and the KKT conditions.
     *   Gradient descent as an optimization scheme (the algorithmic variants land in Chapter 6).
+*   **Numerical Computing & Stability:**
+    *   Floating-point representation (FP64/FP32), machine epsilon, and rounding error.
+    *   Catastrophic cancellation and loss of significance.
+    *   The log-sum-exp trick, and why probabilities are carried in log space.
+    *   Matrix condition number; why you *solve* a linear system rather than invert the matrix.
 *   **Probability & Statistics:**
     *   Probability distributions (Normal, Poisson, Bernoulli, Beta, Dirichlet).
     *   Bayes' Theorem, Maximum Likelihood Estimation (MLE), Maximum A Posteriori (MAP).
     *   Expected value, variance, covariance matrices.
+*   **Statistical Inference & Experiment Design:**
+    *   Sampling distributions, the Central Limit Theorem, standard error.
+    *   Confidence intervals; the bootstrap.
+    *   Hypothesis testing (t-test, chi-squared, Mann-Whitney), p-values and how they are misread.
+    *   Multiple-comparison correction (Bonferroni, Benjamini-Hochberg).
+    *   Statistical power, effect size, and sample-size calculation.
+    *   A/B testing: randomisation, sequential-testing pitfalls, and answering "is model B actually better than model A?"
 *   **Information Theory:** Entropy ($H(X)$), Cross-Entropy, Kullback-Leibler (KL) Divergence ($D_{KL}(P||Q)$).
 
 #### Chapter 2: Engineering Foundations & Infrastructure (The "How")
@@ -152,7 +171,18 @@ optional extras.
 Chapters 3 through 8 progress from classical machine learning to generative AI.
 Each chapter derives the mathematics, then builds the actual model.
 
-#### Chapter 3: Classical ML & Model Evaluation
+#### Chapter 3: Data, Classical ML & Model Evaluation
+
+*The first applied chapter. Get the data right, fit the models that still win on tabular problems, then learn to tell whether they work.*
+
+##### Data Foundations
+
+*Most modelling time is spent here. Everything is pandas/Polars — the stack stays Python.*
+
+*   **Data Loading & Exploratory Analysis:** pandas and Polars dataframes, vectorised operations instead of Python loops, joins/merges and `groupby` aggregation, profiling an unfamiliar dataset, inspecting distributions and correlations.
+*   **Data Cleaning:** Missing-data mechanisms (MCAR/MAR/MNAR) and imputation strategies, outlier detection, duplicate handling, dtype coercion and memory footprint.
+*   **Feature Engineering:** Scaling and standardisation, categorical encoding (one-hot, ordinal, target), interaction and polynomial features, binning, and cyclical encoding for temporal features.
+*   **Dimensionality Reduction:** PCA as the workhorse — derived from the covariance matrix under *Unsupervised Learning* below — plus t-SNE and UMAP for visualisation only, and when each is the wrong choice.
 
 ##### Core Models
 
@@ -160,12 +190,18 @@ Each chapter derives the mathematics, then builds the actual model.
 *   **Tree-Based Models:** Decision Trees (Information Gain, Gini impurity equations), Random Forests (bagging math), Gradient Boosting Machines (XGBoost, LightGBM—derive the Taylor expansion of the loss function).
 *   **Support Vector Machines (SVM):** The primal and dual optimization problems, the kernel trick (RBF, polynomial), max-margin classification.
 *   **Unsupervised Learning:** K-Means clustering (Lloyd's algorithm), Hierarchical clustering, Principal Component Analysis (PCA) (deriving PCA via eigenvalue decomposition of the covariance matrix).
+*   **Recommender Systems:** Collaborative versus content-based filtering, matrix factorization via the SVD of Chapter 1, implicit feedback, the cold-start problem, and ranking metrics (MAP@k, NDCG).
 
 ##### Evaluation, Bias & Lifecycle
 
 *   **The Bias-Variance Tradeoff:** Deriving $Error = Bias^2 + Variance + Irreducible Error$.
 *   **Validation Strategies:** K-fold cross-validation, stratified sampling, temporal splits (crucial for time series!).
 *   **Metrics:** Confusion matrix, Precision, Recall, F1-Score, ROC-AUC, RMSE, MAE, R-squared.
+*   **Hyperparameter Optimization:** Grid and random search, successive halving, Bayesian optimization with Gaussian Processes (the GP machinery arrives in Chapter 4), and `Optuna` in practice.
+*   **Model Interpretability:**
+    *   **SHAP** — Shapley values from cooperative game theory, TreeSHAP for ensembles, local versus global explanations, summary and force plots. This is the standard expectation when presenting ensemble results, so treat it as core rather than optional.
+    *   Permutation importance, partial dependence plots, and LIME.
+    *   Why built-in tree feature importances mislead.
 *   **Data Issues:** Imbalanced datasets (SMOTE math), data leakage, algorithmic bias and fairness definitions (Demographic Parity, Equalized Odds).
 *   **Experiment Tracking:** Weights & Biases (W&B) or MLflow — introduced here and used for every model trained from this chapter onward.
 
@@ -201,6 +237,7 @@ Each chapter derives the mathematics, then builds the actual model.
     *   Geometric Brownian Motion (GBM) and deriving the Black-Scholes PDE.
     *   Portfolio Optimization: Markowitz Efficient Frontier (mean-variance optimization).
 *   **Deep Time Series:** Temporal Convolutional Networks (TCNs), Time Series Transformers (PatchTST).
+*   **Backtesting:** Walk-forward validation, look-ahead bias, survivorship bias.
 
 #### Chapter 6: Deep Learning Fundamentals
 
@@ -209,6 +246,20 @@ Each chapter derives the mathematics, then builds the actual model.
 *   **Optimization Algorithms:** Gradient Descent update rules, Momentum, RMSProp, Adam (derive the bias-corrected first and second moment estimates).
 *   **Loss Functions:** MSE, Binary/Categorical Cross-Entropy, Hinge Loss.
 *   **Regularization:** Dropout, Batch Normalization (write the mean/variance centering equations), Early Stopping.
+*   **Sequence Models:**
+    *   Recurrent Neural Networks (RNNs) and Backpropagation Through Time (BPTT).
+    *   Vanishing and exploding gradients over time — the concrete failure the gates were invented to fix.
+    *   LSTM and GRU gating equations.
+    *   Sequence-to-sequence encoder/decoder models and the fixed-context bottleneck.
+    *   Additive (Bahdanau) attention — the direct bridge to the Transformer in Chapter 8.
+*   **Efficient Training & High-Performance Computing:**
+    *   The GPU execution model: SIMT, warps, memory hierarchy, and why batch size drives utilisation.
+    *   Memory arithmetic: parameters + activations + gradients + optimizer states, and how to predict whether a model fits.
+    *   Mixed precision (FP16/BF16), loss scaling, and numerical caveats that tie back to Chapter 1.
+    *   Gradient accumulation and gradient (activation) checkpointing.
+    *   Data, model, tensor, and pipeline parallelism; DDP, FSDP, and ZeRO sharding.
+    *   Profiling, throughput measurement, and finding the actual bottleneck.
+    *   Cluster scheduling (SLURM), multi-GPU jobs, and checkpoint/resume discipline.
 
 #### Chapter 7: Computer Vision & Scientific ML
 
@@ -237,9 +288,27 @@ Each chapter derives the mathematics, then builds the actual model.
 *   **The Transformer Architecture:** Write out the exact Scaled Dot-Product Attention equation ($Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$).
 *   **Positional Encoding:** sine/cosine equations.
 *   **Parameter-Efficient Fine-Tuning (PEFT):** LoRA math (low-rank matrix decomposition $W = W_0 + BA$).
-*   **Alignment:** RLHF (Reward modeling, PPO math), DPO (Direct Preference Optimization loss).
 *   **Local Inference & Quantization:** Math behind compression (FP16 to INT8/INT4), KV Cache mechanics.
 *   **Hugging Face Ecosystem:** `transformers`, `datasets`, Hub management.
+
+##### Reinforcement Learning Fundamentals
+
+*Prerequisite for alignment. RLHF and PPO are unreadable without it.*
+
+*   Markov Decision Processes: states, actions, rewards, transitions, discounting.
+*   Value and action-value ($Q$) functions; the Bellman expectation and optimality equations.
+*   Dynamic programming: policy iteration and value iteration.
+*   Temporal-difference learning, Q-learning, and Deep Q-Networks.
+*   Policy gradients: the policy gradient theorem, REINFORCE, and variance reduction via baselines.
+*   Actor-critic methods; advantage estimation (GAE).
+*   Trust regions and clipped surrogate objectives — the road to TRPO and PPO.
+
+##### Alignment
+
+*   Supervised fine-tuning.
+*   Reward modeling from preference pairs.
+*   RLHF with PPO (building directly on the RL section above).
+*   DPO (Direct Preference Optimization loss) and why it removes the RL loop.
 
 ##### Retrieval & Agentic Systems
 
@@ -254,6 +323,17 @@ Each chapter derives the mathematics, then builds the actual model.
     *   *Statistical metrics:* Perplexity ($2^{H(P)}$), Cross-Entropy.
     *   *RAG metrics:* Context precision/recall, faithfulness.
 
+##### Adversarial Robustness & AI Security
+
+*Chapter 9 exposes a model over HTTP, which makes this operational rather than theoretical.*
+
+*   Adversarial examples: FGSM and PGD; why small input perturbations flip predictions.
+*   Data poisoning and backdoor attacks.
+*   Prompt injection, jailbreaks, and indirect injection through retrieved documents.
+*   Model extraction and membership-inference attacks.
+*   PII handling, data minimisation, and the basics of differential privacy.
+*   Input validation and output guardrails.
+
 ---
 
 ### Phase 3: Production & Deployment
@@ -261,21 +341,25 @@ Each chapter derives the mathematics, then builds the actual model.
 #### Chapter 9: End-to-End Systems Design & MLOps (The Capstone)
 
 *The chapter that turns the portfolio into a running system. It consumes a model
-trained in an earlier chapter and deploys it as a live, multi-container service.*
+trained in an earlier chapter and deploys it as a live, containerised service.*
+
+Persistence here is Python-native — structured logs and columnar files, not a
+relational database. That keeps the capstone in one language and the focus on
+service design.
 
 ##### Theory
 
 *   **From Notebooks to Live Services:** Why a Jupyter notebook is not a deployment artifact; the training/serving boundary; model artifacts, versioning, and the training-serving skew problem.
-*   **Relational Database Schemas:** Normalisation, primary and foreign keys, indexing, and schema design for prediction logging and feature storage.
+*   **Data Persistence for Services:** What must be durable versus ephemeral, append-only event logs, schema evolution for logged records, and why the serving path should never block on a write.
 *   **Microservice Architecture:** Service decomposition, statelessness, synchronous versus asynchronous boundaries, health checks, and the twelve-factor configuration model.
 
 ##### Applied
 
 *   **RESTful APIs with FastAPI:** REST principles, path and query parameters, Pydantic request/response schemas, dependency injection, wrapping a trained model behind a `/predict` endpoint, and auto-generated OpenAPI documentation.
-*   **Relational Databases (PostgreSQL + SQLAlchemy):** Declarative models, sessions and connection pooling, Alembic migrations, and persisting prediction requests and results.
+*   **Prediction Logging in Python:** Append-only JSONL for request/response records, Parquet via `pandas`/`pyarrow` for analysis, partitioning by date, rotation, and reading the log back to compute drift.
 *   **Containerization & Orchestration:**
     *   Docker architecture: images versus containers, layer caching, multi-stage builds for slim Python images.
-    *   `docker compose` to orchestrate the API, the database, and supporting services as one stack, with volumes, networks, and environment configuration.
+    *   `docker compose` to orchestrate the API and its supporting services as one stack, with volumes, networks, and environment configuration.
 *   **Model Serving at Scale:** Inference engines (`vLLM`, `llama.cpp`), batching, and the latency-versus-throughput tradeoff.
 *   **Cloud Deployment:** AWS (EC2, S3, SageMaker) as the hosting target for the containerised stack.
 *   **Monitoring:** Structured logging, drift detection, and the retraining trigger.
