@@ -1,18 +1,25 @@
 %==============================================================================
-% Chapter 1 — Mathematical Foundations
-% Checklist section 1 of docs/AI_ML_Master_Checklist.md
+% Chapter 1 — Mathematical Foundations for Machine Learning
+% Curriculum: Phase 1, Chapter 1 of docs/AI_ML_Master_Checklist.md
+%
+% Figures for this chapter go in theory/figures/.
 %==============================================================================
-\chapter{Mathematical Foundations}
+\chapter{Mathematical Foundations for Machine Learning}
 \label{ch:math-foundations}
 
 Before you can build the models, you need to speak the language they are written
 in. This chapter fixes the notation used throughout the Compendium and works
-through the four pillars that every later chapter leans on: linear algebra,
-multivariate calculus, probability, and information theory. Each result here
-reappears later in applied form: the singular value decomposition returns as
-PCA and as low-rank adaptation, the chain rule returns as backpropagation, and
-the Kullback--Leibler divergence returns as both the cross-entropy loss and the
-variational lower bound.
+through the pillars that every later chapter leans on. Three are structural ---
+linear algebra, matrix calculus, and multivariate optimization --- and the rest
+supply the vocabulary the book is stated in: numerical computing, probability,
+statistical inference, and information theory.
+
+Each result here reappears later in applied form. The singular value
+decomposition returns as PCA in \cref{sec:unsupervised} and as low-rank
+adaptation in \cref{sec:peft}; the chain rule returns as backpropagation in
+\cref{sec:mlp}; Lagrangian duality returns as the SVM dual in \cref{sec:svm};
+and the Kullback--Leibler divergence returns as both the cross-entropy loss and
+the variational lower bound of \cref{sec:variational-inference}.
 
 \section{Linear Algebra}
 \label{sec:linear-algebra}
@@ -102,7 +109,7 @@ error = np.linalg.norm(a - truncated_svd(a, k), ord="fro") ** 2
 assert np.isclose(error, (sigma[k:] ** 2).sum())  # Eckart-Young
 \end{lstlisting}
 
-\section{Calculus}
+\section{Matrix Calculus}
 \label{sec:calculus}
 
 \begin{definition}{Gradient and Hessian}{grad-hess}
@@ -151,6 +158,46 @@ factorises as
     and every intermediate product stays a vector rather than a full matrix.
 \end{remark}
 
+\subsection{Layout Conventions for Vector and Matrix Derivatives}
+
+% To write: numerator versus denominator layout, the Jacobian of a vector-valued
+% map, and the identities for differentiating x^T A x and A x. Fixing the
+% convention here prevents transpose errors in every later derivation.
+
+\section{Multivariate Optimization}
+\label{sec:optimization}
+
+% Training is optimisation, so the vocabulary is set here once. Gradient descent
+% appears in this section only as an optimisation scheme with convergence
+% conditions; the algorithmic variants (momentum, RMSProp, Adam) belong to
+% \cref{sec:optimizers}.
+
+\subsection{Convexity}
+
+\subsection{Stationary Points and Second-Order Conditions}
+
+\subsection{Constrained Optimization: Lagrange Multipliers}
+
+\subsection{The KKT Conditions}
+
+\subsection{Gradient Descent as an Optimization Scheme}
+
+\section{Numerical Computing and Stability}
+\label{sec:numerical-stability}
+
+% The gap between the mathematics above and the arithmetic a machine actually
+% performs. Every bug in this section is one you will otherwise meet as a silent
+% NaN eight chapters later: overflowing softmax, an ill-conditioned normal
+% equation, a log-likelihood that underflows to zero.
+
+\subsection{Floating-Point Representation and Machine Epsilon}
+
+\subsection{Catastrophic Cancellation and Loss of Significance}
+
+\subsection{The Log-Sum-Exp Trick}
+
+\subsection{Condition Number: Why You Solve Rather Than Invert}
+
 \section{Probability and Statistics}
 \label{sec:probability}
 
@@ -192,6 +239,28 @@ summarises the first two moments used throughout the book.
         \bottomrule
     \end{tabular}
 \end{table}
+
+\section{Statistical Inference and Experiment Design}
+\label{sec:statistical-inference}
+
+% The frequentist counterpart to \cref{sec:probability}, and the section that
+% answers the question every later chapter raises and cannot settle: "is model B
+% actually better than model A, or did the test split flatter it?" A difference
+% in validation score is an estimate with a standard error, not a fact.
+
+\subsection{Sampling Distributions and the Central Limit Theorem}
+
+\subsection{Confidence Intervals and the Bootstrap}
+
+\subsection{Hypothesis Testing}
+
+\subsection{P-Values and How They Are Misread}
+
+\subsection{Multiple-Comparison Correction}
+
+\subsection{Statistical Power, Effect Size and Sample Size}
+
+\subsection{A/B Testing}
 
 \section{Information Theory}
 \label{sec:information-theory}
@@ -244,4 +313,4 @@ is written out.
 The reference texts for this chapter are Strang \autocite{strang2019linalg} for
 linear algebra, Cover and Thomas \autocite{cover2006information} for information
 theory, and Goodfellow et al.\ \autocite{goodfellow2016deep} for the machine
-learning framing of all four sections.
+learning framing of every section above.

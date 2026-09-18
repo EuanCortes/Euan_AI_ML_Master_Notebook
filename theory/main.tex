@@ -7,13 +7,16 @@
 %             the bibliography (Menu -> Settings).
 %
 % Structure:
-%   preamble.tex      packages, styling, theorem boxes, math macros
-%   chapters/*.tex    one file per checklist chapter (see docs/GEMINI.md)
-%   figures/          all images; \graphicspath is set in the preamble
-%   references.bib    single shared bibliography
+%   preamble.tex                    packages, styling, theorem boxes, macros
+%   chapters/0N_<slug>/0N_<slug>.tex   one folder per chapter, nine in total
+%   figures/                        shared images; \graphicspath set in preamble
+%   references.bib                  single shared bibliography
 %
-% Add a new chapter by dropping a file into chapters/ and adding one \input
-% line to the roadmap below. Never write chapter prose in this file.
+% The curriculum lives in docs/AI_ML_Master_Checklist.md — that file is the
+% source of truth for what belongs in each chapter.
+%
+% Add a new chapter by creating chapters/0N_<slug>/0N_<slug>.tex and adding one
+% \input line to the roadmap below. Never write chapter prose in this file.
 %==============================================================================
 \documentclass[11pt,a4paper,oneside]{book}
 
@@ -68,23 +71,32 @@
 %------------------------------------------------------------------------------
 % Main matter — chapter roadmap
 %
-% Uncomment each \input as the corresponding chapter file is written. The
-% numbering mirrors Part 2 of docs/ProjectPlanOverview.md so that chapter N of
-% the book always maps to projects/0N_*/ in the code half of the repository.
+% Nine chapters across three phases. The numbering mirrors
+% docs/AI_ML_Master_Checklist.md, so chapter N of the book always maps to
+% chapters/0N_<slug>/ here and to projects/0N_<slug>/ in the code half of the
+% repository. Each chapter owns a folder; the .tex file inside repeats the
+% folder name so editor tabs stay distinguishable.
+%
+% All nine are included from the start so the skeleton compiles end to end and
+% the table of contents shows the full arc. Comment a line out only to speed up
+% a local draft build — never to mark a chapter as unwritten.
 %------------------------------------------------------------------------------
 \mainmatter
 
-\input{chapters/01_math_foundations}
-% \input{chapters/02_classical_ml}
-% \input{chapters/03_bayesian_ml}
-% \input{chapters/04_time_series}
-% \input{chapters/05_evaluation}
-% \input{chapters/06_deep_learning}
-% \input{chapters/07_computer_vision}
-% \input{chapters/08_gen_ai_nlp}
-% \input{chapters/09_agentic_deployment}
-% \input{chapters/10_sciml}
-% \input{chapters/11_mlops}
+\part{Mathematical \& Engineering Foundations}
+\input{chapters/01_math_foundations/01_math_foundations}
+\input{chapters/02_engineering_foundations/02_engineering_foundations}
+
+\part{Applied Machine Learning \& AI}
+\input{chapters/03_classical_ml/03_classical_ml}
+\input{chapters/04_bayesian_ml/04_bayesian_ml}
+\input{chapters/05_time_series/05_time_series}
+\input{chapters/06_deep_learning/06_deep_learning}
+\input{chapters/07_cv_sciml/07_cv_sciml}
+\input{chapters/08_gen_ai/08_gen_ai}
+
+\part{Production \& Deployment}
+\input{chapters/09_capstone/09_capstone}
 
 %------------------------------------------------------------------------------
 % Back matter

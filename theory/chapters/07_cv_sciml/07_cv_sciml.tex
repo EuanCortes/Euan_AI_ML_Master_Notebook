@@ -1,0 +1,81 @@
+%==============================================================================
+% Chapter 7 — Computer Vision & Scientific ML
+% Curriculum: Phase 2, Chapter 7 of docs/AI_ML_Master_Checklist.md
+% Companion code: projects/07_cv_sciml/
+%
+% Section skeleton only. Figures for this chapter go in theory/figures/.
+%==============================================================================
+\chapter{Computer Vision \& Scientific ML}
+\label{ch:cv-sciml}
+
+Two applications of \cref{ch:deep-learning} that look unrelated and share a
+central idea: both get their power from building a known structure of the
+problem directly into the model rather than hoping the network discovers it.\projectref{projects/07\_cv\_sciml/}
+
+In computer vision that structure is spatial --- translation equivariance and
+locality, encoded as weight sharing in a convolution. In scientific machine
+learning it is physical --- a differential equation the solution must satisfy,
+encoded as an extra term in the loss. Physics-informed networks are the clearer
+illustration: the PDE residual is computed by automatic differentiation of the
+network with respect to its \emph{inputs}, which is the same machinery as
+backpropagation pointed in an unfamiliar direction.
+
+%==============================================================================
+\section{Convolutional Neural Networks}
+\label{sec:cnn}
+
+\subsection{The Discrete Convolution}
+
+\subsection{Strides, Padding and Output Dimensions}
+
+\subsection{Pooling Layers}
+
+\subsection{Receptive Fields}
+
+%==============================================================================
+\section{Classic Architectures}
+\label{sec:cv-architectures}
+
+\subsection{VGG and the Depth Hypothesis}
+
+\subsection{ResNet and the Skip Connection}
+
+%==============================================================================
+\section{Object Detection and Segmentation}
+\label{sec:detection-segmentation}
+
+\subsection{Intersection over Union}
+
+\subsection{YOLO}
+
+\subsection{Mask R-CNN}
+
+%==============================================================================
+\section{Modern Computer Vision}
+\label{sec:modern-cv}
+
+\subsection{Vision Transformers}
+
+\subsection{Patch Embedding}
+
+\subsection{Transfer Learning and Fine-Tuning}
+
+%==============================================================================
+\section{Physics-Informed Neural Networks}
+\label{sec:pinn}
+
+\subsection{Embedding a PDE in the Loss Function}
+
+\subsection{Collocation Points and Boundary Conditions}
+
+\subsection{Balancing the Data and Physics Terms}
+
+%==============================================================================
+\section{Neural Operators}
+\label{sec:neural-operators}
+
+\subsection{Learning Mappings Between Function Spaces}
+
+\subsection{The Fourier Neural Operator}
+
+\subsection{Solving PDEs in the Frequency Domain}
