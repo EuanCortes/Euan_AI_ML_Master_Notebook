@@ -1,7 +1,7 @@
 [project]
 name = "mlnotebook"
 version = "0.1.0"
-description = "Add your description here"
+description = "Theory and applied code for The Applied AI Engineer's Compendium."
 readme = "README.md"
 authors = [
     { name = "CypherEuan", email = "euan.cortes@gmail.com" }
@@ -13,8 +13,8 @@ dependencies = [
     "seaborn>=0.13.2",
 ]
 
-[project.scripts]
-mlnotebook = "mlnotebook:main"
+[project.urls]
+Repository = "https://github.com/EuanCortes/Euan_AI_ML_Master_Notebook"
 
 [build-system]
 requires = ["uv_build>=0.12.0,<0.13.0"]

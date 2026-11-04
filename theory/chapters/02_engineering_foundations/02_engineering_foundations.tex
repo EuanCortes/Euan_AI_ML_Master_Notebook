@@ -1,6 +1,6 @@
 %==============================================================================
 % Chapter 2 — Engineering Foundations & Infrastructure
-% Curriculum: Phase 1, Chapter 2 of docs/AI_ML_Master_Checklist.md
+% Curriculum: Phase 1, Chapter 2 of README.md
 % Companion code: projects/02_engineering_foundations/
 %
 % Section skeleton only. Figures for this chapter go in theory/figures/.
@@ -65,6 +65,9 @@ configured in this repository.
 
 \subsection{Per-Project \texttt{pyproject.toml} for Isolation}
 
+% TODO: Projects whose requirements conflict with the root get their own
+% pyproject.toml or a dedicated Dockerfile.
+
 %==============================================================================
 \section{Data Version Control}
 \label{sec:dvc}
@@ -74,6 +77,9 @@ configured in this repository.
 \subsection{Tracking Datasets as Lightweight Pointers}
 
 \subsection{Configuring a Remote}
+
+% TODO: AWS S3 or Google Drive as the remote. Large datasets never enter Git
+% history; only the pointer files are committed.
 
 \subsection{The \texttt{push}/\texttt{pull} Round Trip}
 
@@ -87,6 +93,8 @@ configured in this repository.
 
 \subsection{Linear History}
 
+% TODO: No force-pushes to main.
+
 %==============================================================================
 \section{Continuous Integration and Delivery}
 \label{sec:cicd}
@@ -94,6 +102,8 @@ configured in this repository.
 \subsection{Workflow Anatomy: Triggers, Jobs, Steps}
 
 \subsection{Path Filters}
+
+% TODO: A LaTeX edit should not run the Python test suite.
 
 \subsection{Automated Compilation of This Book}
 

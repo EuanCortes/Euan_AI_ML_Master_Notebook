@@ -1,6 +1,6 @@
 %==============================================================================
 % Chapter 4 — Bayesian ML & Probabilistic Modeling
-% Curriculum: Phase 2, Chapter 4 of docs/AI_ML_Master_Checklist.md
+% Curriculum: Phase 2, Chapter 4 of README.md
 % Companion code: projects/04_bayesian_ml/
 %
 % Section skeleton only. Figures for this chapter go in theory/figures/.
@@ -28,9 +28,14 @@ optimisation used throughout Phase~2.
 
 \subsection{The Bayes Integral}
 
+% TODO: Write out the full integral
+% P(\theta|D) = P(D|\theta)P(\theta) / \int P(D|\theta)P(\theta) d\theta.
+
 \subsection{Priors, Likelihoods and Posteriors}
 
 \subsection{Conjugate Priors}
+
+% TODO: Show how a Beta prior and a Binomial likelihood yield a Beta posterior.
 
 %==============================================================================
 \section{Markov Chain Monte Carlo}
@@ -39,6 +44,8 @@ optimisation used throughout Phase~2.
 \subsection{Detailed Balance}
 
 \subsection{Metropolis--Hastings}
+
+% TODO: Derive the acceptance probability.
 
 \subsection{Hamiltonian Monte Carlo}
 
@@ -52,6 +59,8 @@ optimisation used throughout Phase~2.
 
 \subsection{Deriving the Evidence Lower Bound}
 
+% TODO: Arrive at ELBO = E_q[\log P(X,Z) - \log q(Z)].
+
 \subsection{Mean-Field Approximations}
 
 %==============================================================================
@@ -61,6 +70,8 @@ optimisation used throughout Phase~2.
 \subsection{Distributions Over Functions}
 
 \subsection{Covariance Functions and Kernels}
+
+% TODO: RBF and Matern kernels.
 
 \subsection{The Predictive Mean and Variance}
 
@@ -73,5 +84,7 @@ optimisation used throughout Phase~2.
 \subsection{Bayesian Neural Networks}
 
 \subsection{Monte Carlo Dropout as Approximate Inference}
+
+% TODO: Prove how dropout approximates Bayesian inference.
 
 \subsection{Calibration and Uncertainty Quality}

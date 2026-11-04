@@ -1,6 +1,6 @@
 %==============================================================================
 % Chapter 1 — Mathematical Foundations for Machine Learning
-% Curriculum: Phase 1, Chapter 1 of docs/AI_ML_Master_Checklist.md
+% Curriculum: Phase 1, Chapter 1 of README.md
 %
 % Figures for this chapter go in theory/figures/.
 %==============================================================================
@@ -38,6 +38,10 @@ dot product of $\vect{x}, \vect{y} \in \R^{n}$,
 is the single most reused operation in machine learning. \Cref{eq:dot-product}
 is why cosine similarity is the default metric for vector databases: normalise
 both vectors and the dot product \emph{is} the cosine of the angle between them.
+
+% TODO: Tensors as the generalisation of vectors and matrices, and the
+% eigenvalue/eigenvector decomposition (A v = \lambda v). The SVD below leans on
+% it: the singular values are defined through the eigenvalues of A^T A.
 
 \subsection{The Singular Value Decomposition}
 
@@ -124,6 +128,9 @@ assert np.isclose(error, (sigma[k:] ** 2).sum())  # Eckart-Young
     \end{equation*}
 \end{definition}
 
+% TODO: Define the Jacobian of f : R^n -> R^m alongside the gradient and
+% Hessian. \Cref{eq:chain-rule} below uses it before it is introduced.
+
 The gradient points in the direction of steepest ascent, which is why gradient
 \emph{descent} moves against it. The second-order Taylor expansion of $f$ about
 $\vect{x}_0$,
@@ -192,9 +199,15 @@ factorises as
 
 \subsection{Floating-Point Representation and Machine Epsilon}
 
+% TODO: FP64 versus FP32 (sign, exponent, mantissa), machine epsilon for each,
+% and rounding error.
+
 \subsection{Catastrophic Cancellation and Loss of Significance}
 
 \subsection{The Log-Sum-Exp Trick}
+
+% TODO: Derive the trick, and explain why probabilities are carried in log
+% space.
 
 \subsection{Condition Number: Why You Solve Rather Than Invert}
 
@@ -240,6 +253,10 @@ summarises the first two moments used throughout the book.
     \end{tabular}
 \end{table}
 
+% TODO: The distributions used later in the book --- Normal, Poisson,
+% Bernoulli, Beta and Dirichlet. Extend \cref{tab:moments} from scalar
+% covariance to the covariance matrix.
+
 \section{Statistical Inference and Experiment Design}
 \label{sec:statistical-inference}
 
@@ -250,17 +267,26 @@ summarises the first two moments used throughout the book.
 
 \subsection{Sampling Distributions and the Central Limit Theorem}
 
+% TODO: Include the standard error.
+
 \subsection{Confidence Intervals and the Bootstrap}
 
 \subsection{Hypothesis Testing}
+
+% TODO: The t-test, chi-squared test and Mann--Whitney U test.
 
 \subsection{P-Values and How They Are Misread}
 
 \subsection{Multiple-Comparison Correction}
 
+% TODO: Bonferroni and Benjamini--Hochberg.
+
 \subsection{Statistical Power, Effect Size and Sample Size}
 
 \subsection{A/B Testing}
+
+% TODO: Randomisation, sequential-testing pitfalls, and answering "is model B
+% actually better than model A?"
 
 \section{Information Theory}
 \label{sec:information-theory}
