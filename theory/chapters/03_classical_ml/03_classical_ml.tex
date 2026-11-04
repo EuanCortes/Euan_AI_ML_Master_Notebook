@@ -1,6 +1,6 @@
 %==============================================================================
 % Chapter 3 — Classical ML & Model Evaluation
-% Curriculum: Phase 2, Chapter 3 of docs/AI_ML_Master_Checklist.md
+% Curriculum: Phase 2, Chapter 3 of README.md
 % Companion code: projects/03_classical_ml/
 %
 % Section skeleton only. Figures for this chapter go in theory/figures/.
@@ -87,9 +87,13 @@ the chapter applies unchanged to the deep models of
 
 \subsection{Ordinary Least Squares and the Normal Equations}
 
+% TODO: Derive the closed-form solution \beta = (X^T X)^{-1} X^T y.
+
 \subsection{Logistic Regression and the Sigmoid Map}
 
 \subsection{Ridge and Lasso Regularisation}
+
+% TODO: Write out the L2 (Ridge) and L1 (Lasso) penalty terms.
 
 %==============================================================================
 \section{Tree-Based Models}
@@ -97,11 +101,16 @@ the chapter applies unchanged to the deep models of
 
 \subsection{Decision Trees: Information Gain and Gini Impurity}
 
+% TODO: Write out the information gain and Gini impurity equations.
+
 \subsection{Random Forests and the Mathematics of Bagging}
 
 \subsection{Gradient Boosting Machines}
 
 \subsection{XGBoost and LightGBM: the Taylor Expansion of the Loss}
+
+% TODO: Derive the second-order Taylor expansion of the loss, building on
+% \cref{eq:taylor}.
 
 %==============================================================================
 \section{Support Vector Machines}
@@ -112,6 +121,8 @@ the chapter applies unchanged to the deep models of
 \subsection{The Primal and Dual Problems}
 
 \subsection{The Kernel Trick}
+
+% TODO: RBF and polynomial kernels.
 
 %==============================================================================
 \section{Unsupervised Learning}
@@ -154,6 +165,8 @@ the chapter applies unchanged to the deep models of
 
 \subsection{Decomposing the Expected Error}
 
+% TODO: Derive Error = Bias^2 + Variance + Irreducible Error.
+
 \subsection{Reading Regularisation Through the Decomposition}
 
 %==============================================================================
@@ -165,6 +178,8 @@ the chapter applies unchanged to the deep models of
 \subsection{Stratified Sampling}
 
 \subsection{Temporal Splits}
+
+% TODO: Crucial for time series --- see \cref{sec:backtesting}.
 
 %==============================================================================
 \section{Metrics}
@@ -240,14 +255,21 @@ the chapter applies unchanged to the deep models of
 
 \subsection{Imbalanced Datasets and SMOTE}
 
+% TODO: Write out the SMOTE mathematics.
+
 \subsection{Data Leakage}
 
 \subsection{Fairness Definitions}
+
+% TODO: Algorithmic bias; Demographic Parity and Equalized Odds.
 
 %==============================================================================
 \section{Experiment Tracking}
 \label{sec:experiment-tracking}
 
 \subsection{What to Log and Why}
+
+% TODO: Introduced here and used for every model trained from this chapter
+% onward.
 
 \subsection{Weights \& Biases and MLflow}

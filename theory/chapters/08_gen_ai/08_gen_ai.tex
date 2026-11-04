@@ -1,6 +1,6 @@
 %==============================================================================
 % Chapter 8 — Generative AI, NLP & Agentic Systems
-% Curriculum: Phase 2, Chapter 8 of docs/AI_ML_Master_Checklist.md
+% Curriculum: Phase 2, Chapter 8 of README.md
 % Companion code: projects/08_gen_ai/
 %
 % Section skeleton only. Figures for this chapter go in theory/figures/.
@@ -29,6 +29,8 @@ anywhere else in the book.
 
 \subsection{The Reparameterization Trick}
 
+% TODO: z = \mu + \sigma \odot \epsilon.
+
 \subsection{The ELBO as a Training Objective}
 
 %==============================================================================
@@ -37,6 +39,8 @@ anywhere else in the book.
 
 \subsection{The Minimax Game}
 
+% TODO: Write out the minimax loss function.
+
 \subsection{Training Instability and Mode Collapse}
 
 %==============================================================================
@@ -44,6 +48,8 @@ anywhere else in the book.
 \label{sec:diffusion}
 
 \subsection{The Forward Noising Markov Chain}
+
+% TODO: Write out the forward noise equations.
 
 \subsection{The Reverse Denoising Process}
 
@@ -65,9 +71,13 @@ anywhere else in the book.
 
 \subsection{Scaled Dot-Product Attention}
 
+% TODO: Attention(Q, K, V) = softmax(Q K^T / \sqrt{d_k}) V.
+
 \subsection{Multi-Head Attention}
 
 \subsection{Positional Encoding}
+
+% TODO: The sine/cosine equations.
 
 \subsection{The Full Block: Residuals, Normalisation and the Feed-Forward Layer}
 
@@ -80,6 +90,8 @@ anywhere else in the book.
 \subsection{Full Fine-Tuning and Why It Is Avoided}
 
 \subsection{LoRA and Low-Rank Decomposition}
+
+% TODO: W = W_0 + BA.
 
 \subsection{QLoRA and Adapter Variants}
 
@@ -141,6 +153,8 @@ anywhere else in the book.
 
 \subsection{Numeric Formats from FP32 to INT4}
 
+% TODO: The mathematics of compressing FP16 to INT8/INT4.
+
 \subsection{Post-Training Quantization and Quantization-Aware Training}
 
 \subsection{KV Cache Mechanics}
@@ -173,7 +187,11 @@ anywhere else in the book.
 
 \subsection{Vector Databases}
 
+% TODO: Chroma and FAISS.
+
 \subsection{Distance Metrics}
+
+% TODO: Cosine similarity A.B / (||A|| ||B||) and Euclidean distance.
 
 \subsection{The Ingestion-to-Answer Pipeline}
 
@@ -189,13 +207,19 @@ anywhere else in the book.
 
 \subsection{Multi-Agent Orchestration as a DAG}
 
+% TODO: LangGraph.
+
 %==============================================================================
 \section{Generative Evaluation and Benchmarking}
 \label{sec:gen-eval}
 
 \subsection{N-Gram Metrics: BLEU and ROUGE}
 
+% TODO: Write out both formulas.
+
 \subsection{Perplexity and Cross-Entropy}
+
+% TODO: Perplexity = 2^{H(P)}.
 
 \subsection{RAG Metrics: Context Precision, Recall and Faithfulness}
 
