@@ -61,6 +61,12 @@ configured in this repository.
 
 \subsection{Resolving and Committing \texttt{uv.lock}}
 
+% TODO: Keep uv.lock in sync with pyproject.toml automatically. Add a
+% pre-commit hook (astral-sh/uv-pre-commit, hook id `uv-lock`) so every commit
+% re-resolves the lock and fails if it changed, prompting a re-stage. Back it
+% up in CI with `uv lock --check` / `uv sync --locked`, so a PR with a stale
+% lock cannot merge even if the local hook was skipped.
+
 \subsection{Pinning the Interpreter with \texttt{.python-version}}
 
 \subsection{Per-Project \texttt{pyproject.toml} for Isolation}
@@ -108,6 +114,12 @@ configured in this repository.
 \subsection{Automated Compilation of This Book}
 
 \subsection{Testing and Linting Gates}
+
+% TODO: Add .github/workflows/test_python.yml. Trigger on pull requests to main
+% with a path filter on src/**, projects/**, tests/**, pyproject.toml and
+% uv.lock. Steps: checkout, astral-sh/setup-uv, `uv sync --locked`,
+% `uv run ruff check .`, `uv run ruff format --check .`, `uv run pytest`. Add a
+% tests/ folder and make the workflow a required status check on main.
 
 \subsection{Artifact Upload}
 

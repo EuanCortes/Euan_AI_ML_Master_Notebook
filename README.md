@@ -1,14 +1,10 @@
 # The Applied AI Engineer's Compendium
 
-A self-directed curriculum that takes machine learning from first principles to
-production. Each of its nine chapters has two halves: the mathematics, derived by
-hand and written up as a LaTeX book in `theory/`, and an applied project in
-`projects/` that turns those ideas into tested, reproducible Python. The
-engineering infrastructure comes first, as Chapter 2, before any model is
-trained: dependency locking with `uv`, data versioning with DVC, CI with GitHub
-Actions and pull-request-only merges to `main`. Every later project inherits it.
-The stack is Python from end to end. The curriculum finishes with a capstone that
-deploys a model from an earlier chapter as a containerised FastAPI service.
+A self-directed curriculum that takes machine learning from first principles to production. Each of its nine chapters has two halves: the mathematics, derived by hand and written up as a LaTeX book in `theory/`, and an applied project in `projects/` that turns those ideas into tested, reproducible Python. The engineering infrastructure comes first, as Chapter 2, before any model is trained: dependency locking with `uv`, data versioning with DVC, CI with GitHub Actions and pull-request-only merges to `main`. Every later project inherits it. The stack is Python from end to end. The curriculum finishes with a capstone that deploys a model from an earlier chapter as a containerised FastAPI service.
+
+
+### Why?
+I wanted something that contains my understanding that I have accumulated but also plugging the holes in my knowledge. By writing everything in my own words it also strengthens my understanding, and as I continue to learn so will (hopefully) this document and who knows maybe I will be able to do some cool projects or even some research with the learnings from this.
 
 ## Repository Architecture
 
